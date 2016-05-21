@@ -17,11 +17,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="31b-ZK-ej9">
+                                <rect key="frame" x="-25" y="-30" width="97" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="112" y="162" width="97" height="30"/>
+                                </variation>
+                                <connections>
+                                    <action selector="PasswordEntered:" destination="BYZ-38-t0r" eventType="editingDidEnd" id="5HZ-mU-iR7"/>
+                                </connections>
+                            </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Exz-Ln-pgT">
                                 <rect key="frame" x="189" y="158" width="46" height="30"/>
                                 <state key="normal" title="Capture"/>
                                 <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="133" y="430" width="55" height="30"/>
+                                    <rect key="frame" x="133" y="54" width="55" height="30"/>
                                 </variation>
                                 <connections>
                                     <action selector="CaptureButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="I0d-zO-lrd"/>
@@ -29,10 +40,21 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="31b-ZK-ej9"/>
+                            </mask>
+                        </variation>
+                        <variation key="widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="31b-ZK-ej9"/>
+                            </mask>
+                        </variation>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="CaptureButton" destination="Exz-Ln-pgT" id="ajX-gt-vby"/>
+                        <outlet property="PasswordField" destination="31b-ZK-ej9" id="7zN-LI-KZo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
