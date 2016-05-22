@@ -9,6 +9,7 @@
 import UIKit
 import AVKit
 import MobileCoreServices
+import Foundation
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
@@ -94,6 +95,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             if cfstatus == false {
                 print("ERROR: Failed to connect to FTP server.")
             }else{
+                let buf:UnsafePointer<UInt8>! = UnsafePointer<UInt8>((videoData?.bytes)!)
+                let buf2:UnsafePointer<UInt8>! = UnsafePointer<UInt8>((videoData?.bytes)!)
+                let buf3:UnsafeMutablePointer<Void>! = UnsafeMutablePointer(videoData!.bytes)
+                print("\(buf)\(buf2)\(buf3)")
+                
                 var totalBytesWritten = 0
                 var bytesWritten = 0
                 var bytesLeft = (videoData?.length)!
@@ -101,15 +107,19 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                 
                 print("SENDING \(fileLength) BYTES:")
                 repeat{
-                    bytesWritten = CFWriteStreamWrite(FTPStream, dataPath, bytesLeft)
+                    bytesWritten = CFWriteStreamWrite(FTPStream, buf, bytesLeft)
                     print("BytesWritten: \(bytesWritten)")
                     totalBytesWritten += bytesWritten
                     if (bytesWritten < fileLength) {
                         bytesLeft = fileLength - totalBytesWritten
+                        memmove(buf3, buf2 + bytesWritten, bytesLeft)
                     }else{
                         bytesLeft = 0
                     }
                     print("Bytes Left: \(bytesLeft)")
+                    if CFWriteStreamCanAcceptBytes(FTPStream) == false{
+                        sleep(1)
+                    }
                     
                     
                 }while((totalBytesWritten < fileLength && bytesWritten >= 0) /*|| (bytesLeft != 0)*/)
