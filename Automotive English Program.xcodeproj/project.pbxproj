@@ -14,6 +14,7 @@
 		32A36B1C1CED5ACB001CE145 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32A36B1A1CED5ACB001CE145 /* LaunchScreen.storyboard */; };
 		32A36B271CED5ACB001CE145 /* Automotive_English_ProgramTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A36B261CED5ACB001CE145 /* Automotive_English_ProgramTests.swift */; };
 		32A36B321CED5ACB001CE145 /* Automotive_English_ProgramUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A36B311CED5ACB001CE145 /* Automotive_English_ProgramUITests.swift */; };
+		32AC48CA1CF39700005DE742 /* 5911HomePageMan.png in Resources */ = {isa = PBXBuildFile; fileRef = 32AC48C91CF39700005DE742 /* 5911HomePageMan.png */; };
 		32DEB5751CEF50D100FF30B1 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32DEB5741CEF50D100FF30B1 /* MobileCoreServices.framework */; };
 /* End PBXBuildFile section */
 
@@ -48,6 +49,7 @@
 		32A36B2D1CED5ACB001CE145 /* Automotive English ProgramUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Automotive English ProgramUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		32A36B311CED5ACB001CE145 /* Automotive_English_ProgramUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Automotive_English_ProgramUITests.swift; sourceTree = "<group>"; };
 		32A36B331CED5ACB001CE145 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		32AC48C91CF39700005DE742 /* 5911HomePageMan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 5911HomePageMan.png; sourceTree = "<group>"; };
 		32DEB5741CEF50D100FF30B1 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -101,6 +103,7 @@
 		32A36B101CED5ACB001CE145 /* Automotive English Program */ = {
 			isa = PBXGroup;
 			children = (
+				32AC48C91CF39700005DE742 /* 5911HomePageMan.png */,
 				32A36B111CED5ACB001CE145 /* AppDelegate.swift */,
 				32A36B131CED5ACB001CE145 /* ViewController.swift */,
 				32A36B151CED5ACB001CE145 /* Main.storyboard */,
@@ -234,6 +237,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32AC48CA1CF39700005DE742 /* 5911HomePageMan.png in Resources */,
 				32A36B1C1CED5ACB001CE145 /* LaunchScreen.storyboard in Resources */,
 				32A36B191CED5ACB001CE145 /* Assets.xcassets in Resources */,
 				32A36B171CED5ACB001CE145 /* Main.storyboard in Resources */,
