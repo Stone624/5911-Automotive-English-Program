@@ -17,6 +17,7 @@
 		32A36B321CED5ACB001CE145 /* Automotive_English_ProgramUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A36B311CED5ACB001CE145 /* Automotive_English_ProgramUITests.swift */; };
 		32AC48CA1CF39700005DE742 /* 5911HomePageMan.png in Resources */ = {isa = PBXBuildFile; fileRef = 32AC48C91CF39700005DE742 /* 5911HomePageMan.png */; };
 		32DEB5751CEF50D100FF30B1 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32DEB5741CEF50D100FF30B1 /* MobileCoreServices.framework */; };
+		32F13F921CF66B0600236609 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32F13F911CF66B0600236609 /* HomeController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		32A36B331CED5ACB001CE145 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		32AC48C91CF39700005DE742 /* 5911HomePageMan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 5911HomePageMan.png; sourceTree = "<group>"; };
 		32DEB5741CEF50D100FF30B1 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		32F13F911CF66B0600236609 /* HomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +115,7 @@
 				32A36B1A1CED5ACB001CE145 /* LaunchScreen.storyboard */,
 				32A36B1D1CED5ACB001CE145 /* Info.plist */,
 				324E2D1D1CF6563200CC3B95 /* LoginController.swift */,
+				32F13F911CF66B0600236609 /* HomeController.swift */,
 			);
 			path = "Automotive English Program";
 			sourceTree = "<group>";
@@ -268,6 +271,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32F13F921CF66B0600236609 /* HomeController.swift in Sources */,
 				32A36B141CED5ACB001CE145 /* ViewController.swift in Sources */,
 				324E2D1E1CF6563200CC3B95 /* LoginController.swift in Sources */,
 				32A36B121CED5ACB001CE145 /* AppDelegate.swift in Sources */,
