@@ -9,7 +9,7 @@
 import UIKit
 import Foundation
 
-class LoginController: UIViewController{
+class LoginController: UIViewController,UITextFieldDelegate{
 
     @IBOutlet weak var UsernameTextField: UITextField!
     @IBOutlet weak var PasswordTextField: UITextField!
@@ -18,6 +18,13 @@ class LoginController: UIViewController{
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         print("Login Page loaded.")
+        self.UsernameTextField.delegate = self
+        self.PasswordTextField.delegate = self
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool{
+        textField.resignFirstResponder()
+        return false
     }
     
     @IBAction func LoginButtonPressed(sender: AnyObject) {

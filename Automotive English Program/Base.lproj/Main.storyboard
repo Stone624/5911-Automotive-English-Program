@@ -852,6 +852,7 @@
                         <viewControllerLayoutGuide type="bottom" id="8rh-dL-Dd1"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Cuo-ey-iQQ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Coming Soon!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0l4-SJ-5zV">
@@ -929,6 +930,7 @@
                         <viewControllerLayoutGuide type="bottom" id="EzS-Af-56y"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="9ud-hh-L4V">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Coming Soon!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lzu-Px-CVG">
@@ -968,6 +970,7 @@
                         <viewControllerLayoutGuide type="bottom" id="FKP-NH-bYk"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="bMV-gm-6tJ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Coming Soon!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c1w-NZ-Tmr">
@@ -1007,6 +1010,7 @@
                         <viewControllerLayoutGuide type="bottom" id="vhN-Fq-L2b"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Uck-EL-Ndi">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Coming Soon!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Sp-o3-BsD">
@@ -1046,6 +1050,7 @@
                         <viewControllerLayoutGuide type="bottom" id="cR4-wO-BbU"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="h83-Ij-UzI">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Coming Soon!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C6f-qs-5t7">
@@ -1085,6 +1090,7 @@
                         <viewControllerLayoutGuide type="bottom" id="hra-eF-wLg"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="GnE-gu-z5r">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Coming Soon!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cgo-UW-PdL">
@@ -1162,6 +1168,7 @@
                         <viewControllerLayoutGuide type="bottom" id="00T-Rc-T9x"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="nFf-uk-Xpw">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Coming Soon!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="czc-Al-p1l">
@@ -1201,6 +1208,7 @@
                         <viewControllerLayoutGuide type="bottom" id="sUv-m4-AcR"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ARy-9O-2JI">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Coming Soon!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LP5-YQ-RcL">
