@@ -10,6 +10,7 @@ import UIKit
 import AVKit
 import MobileCoreServices
 import Foundation
+import AVFoundation
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
@@ -18,6 +19,13 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     let saveFileName = "outputVideo.mov"
     @IBOutlet weak var CaptureButton: UIButton!
     @IBOutlet weak var PasswordField: UITextField!
+    
+    //
+    let captureSession = AVCaptureSession()
+    var previewLayer : AVCaptureVideoPreviewLayer?
+    var captureDevice : AVCaptureDevice?
+    
+    //
     
     
     @IBAction func PasswordEntered(sender: AnyObject) {
@@ -32,12 +40,61 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        // Do any additional setup after loading the view, typically from a nib.
+        captureSession.sessionPreset = AVCaptureSessionPresetHigh
+        
+        let devices = AVCaptureDevice.devices()
+        
+        // Loop through all the capture devices on this phone
+        for device in devices {
+            // Make sure this particular device supports video
+            if (device.hasMediaType(AVMediaTypeVideo)) {
+                // Finally check the position and confirm we've got the back camera
+                print("PRINTING DEVICE: \(device)")
+                print("SOMETHING BACK: \(AVCaptureDevicePosition.Back)")
+                if(device.position == AVCaptureDevicePosition.Back) {
+                    captureDevice = device as? AVCaptureDevice
+                    if captureDevice != nil {
+                        print("Capture device found")
+                        do{
+                        try beginSession()
+                        } catch {}
+                    }
+                }
+            }
+        }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    
+    func configureDevice() throws {
+        if let device = captureDevice {
+            try device.lockForConfiguration()
+            device.focusMode = .Locked
+            device.unlockForConfiguration()
+        }
+        
     }
+    
+    func beginSession() throws {
+        
+        try configureDevice()
+        
+        do {
+            let input = try AVCaptureDeviceInput(device: captureDevice)
+            captureSession.addInput(input)
+            
+            previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+            self.view.layer.addSublayer(previewLayer!)
+            previewLayer?.frame = self.view.layer.frame
+            captureSession.startRunning()
+            
+        } catch {
+            print("EXPLOSION! (video attempt blew up.")
+        }
+    }
+    
+    
+    //////////////vvv Previous code//////////////////
     
     //Code that runs when the Capture Button is pressed. Should alert if the camera is unavailable, or open the camera, preferrebly in the front, if the camera is available. (2/3)
     @IBAction func CaptureButtonPressed(sender: UIButton) {

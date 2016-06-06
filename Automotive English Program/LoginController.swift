@@ -41,6 +41,11 @@ class LoginController: UIViewController,UITextFieldDelegate{
             self.presentViewController(vc! as UIViewController, animated: true, completion: nil)
         } else {
             print("Access denied")
+            let alert = UIAlertView() //<<NOTE: UIAlertView depreciated for IOS 8 and above. UIAlertController should be used when IOS 7 and lower will not use this app.
+            alert.title = "ERROR: Login Authentication Failed."
+            alert.message = "Your Username and/or Password was incorrect. Please try again."
+            alert.addButtonWithTitle("OK")
+            alert.show()
         }
     }
     
