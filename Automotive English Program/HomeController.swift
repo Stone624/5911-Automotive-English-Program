@@ -11,11 +11,37 @@ import Foundation
 
 class HomeController: UIViewController{
     
+    @IBOutlet weak var WelcomeTextLabel: UILabel!
+    @IBOutlet weak var HowToGetStartedTextButton: UIButton!
+    @IBOutlet weak var MyCoachTextButton: UIButton!
+    @IBOutlet weak var LessonsTextButton: UIButton!
+    @IBOutlet weak var MyProfileTextButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        //?
         print("Home Page loaded.")
+    }
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        let currentLanguageIsEnglish:Bool = globalUtility.getIsEnglishLanguageSetting()
+        print("Loading page: Got Global Language Setting: English: \(currentLanguageIsEnglish)")
+        if(currentLanguageIsEnglish){
+            WelcomeTextLabel.text = "Welcome!"
+            HowToGetStartedTextButton.setTitle("How to get started", forState: .Normal)
+            MyCoachTextButton.setTitle("My Coach", forState: .Normal)
+            LessonsTextButton.setTitle("Lessons", forState: .Normal)
+            MyProfileTextButton.setTitle("My Profile", forState: .Normal)
+        }else{
+            WelcomeTextLabel.text = "いらっしゃいませ！"
+            HowToGetStartedTextButton.setTitle("始めましょう", forState: .Normal)
+            MyCoachTextButton.setTitle("マイ先生", forState: .Normal)
+            LessonsTextButton.setTitle("授業", forState: .Normal)
+            MyProfileTextButton.setTitle("マイプロフィール", forState: .Normal)
+        }
+
+        print("Home Page appeared.")
     }
     
     @IBAction func OneOnOneButtonPressed(sender: AnyObject) {
