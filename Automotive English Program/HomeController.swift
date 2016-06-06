@@ -38,4 +38,10 @@ class HomeController: UIViewController{
     }
     
     
+    @IBAction func LogoutButtonPressed(sender: AnyObject) {
+        //clear user specific data
+        let vc = self.storyboard?.instantiateViewControllerWithIdentifier("LoginPageNavigationController")
+        self.presentViewController(vc! as UIViewController, animated: true, completion: nil)
+
+    }
 }

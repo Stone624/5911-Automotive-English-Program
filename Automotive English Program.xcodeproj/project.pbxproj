@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		324E2D1E1CF6563200CC3B95 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324E2D1D1CF6563200CC3B95 /* LoginController.swift */; };
+		3284464B1D05C3DC004CEE4E /* 5911Conversations1.png in Resources */ = {isa = PBXBuildFile; fileRef = 3284464A1D05C3DC004CEE4E /* 5911Conversations1.png */; };
 		32A36B121CED5ACB001CE145 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A36B111CED5ACB001CE145 /* AppDelegate.swift */; };
 		32A36B141CED5ACB001CE145 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A36B131CED5ACB001CE145 /* ViewController.swift */; };
 		32A36B171CED5ACB001CE145 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32A36B151CED5ACB001CE145 /* Main.storyboard */; };
@@ -39,6 +40,7 @@
 
 /* Begin PBXFileReference section */
 		324E2D1D1CF6563200CC3B95 /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
+		3284464A1D05C3DC004CEE4E /* 5911Conversations1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 5911Conversations1.png; path = ../../../5911Conversations1.png; sourceTree = "<group>"; };
 		32A36B0E1CED5ACB001CE145 /* Automotive English Program.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Automotive English Program.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		32A36B111CED5ACB001CE145 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		32A36B131CED5ACB001CE145 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 		32A36B101CED5ACB001CE145 /* Automotive English Program */ = {
 			isa = PBXGroup;
 			children = (
+				3284464A1D05C3DC004CEE4E /* 5911Conversations1.png */,
 				32AC48C91CF39700005DE742 /* 5911HomePageMan.png */,
 				32A36B111CED5ACB001CE145 /* AppDelegate.swift */,
 				32A36B131CED5ACB001CE145 /* ViewController.swift */,
@@ -243,6 +246,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3284464B1D05C3DC004CEE4E /* 5911Conversations1.png in Resources */,
 				32AC48CA1CF39700005DE742 /* 5911HomePageMan.png in Resources */,
 				32A36B1C1CED5ACB001CE145 /* LaunchScreen.storyboard in Resources */,
 				32A36B191CED5ACB001CE145 /* Assets.xcassets in Resources */,
