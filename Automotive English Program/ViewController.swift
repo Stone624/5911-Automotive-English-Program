@@ -40,6 +40,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
         // Do any additional setup after loading the view, typically from a nib.
         captureSession.sessionPreset = AVCaptureSessionPresetHigh
         
@@ -85,14 +86,20 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             
             previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
             self.view.layer.addSublayer(previewLayer!)
-            previewLayer?.frame = self.view.layer.frame
+            previewLayer?.frame = CGRectMake(30, 200, 300, 250)//self.view.layer.frame
+            let button = UIButton(frame: CGRect(x: 30, y: 100, width: 100, height: 30))
+            button.setTitle("START", forState: .Normal)
+            button.addTarget(self, action: #selector(ViewController.StartButtonPressed), forControlEvents: UIControlEvents.TouchUpInside)
+            self.view.addSubview(button)
             captureSession.startRunning()
             
         } catch {
             print("EXPLOSION! (video attempt blew up.")
         }
     }
-    
+    func StartButtonPressed(sender: UIButton!) {
+        print("Start button Pressed! :)")
+    }
     
     //////////////vvv Previous code//////////////////
     
