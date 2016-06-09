@@ -9,6 +9,7 @@
 import UIKit
 import Foundation
 
+// justin now has access to git, sorry for the delay
 class LoginController: UIViewController,UITextFieldDelegate{
 
     @IBOutlet weak var UsernameTextField: UITextField!
