@@ -9,14 +9,34 @@
 import Foundation
 
 class GlobalUtility {
+    //Fields
     var currentLanguageIsEnglish:Bool = true
-    
+    var unitName:String = ""
+    var unitImageLink:String = ""
+    var conversationImageLink:String = ""
+    var conversation = [String]()
+    //Methods
     func getIsEnglishLanguageSetting() -> Bool{
         return currentLanguageIsEnglish
     }
-    
     func switchLanguageSetting(){
         currentLanguageIsEnglish = !currentLanguageIsEnglish
     }
+    
+    func setUnitName(name:String){unitName = name}
+    func getUnitName() -> String{return unitName}
+    
+    func setUnitImageLink(name:String){unitImageLink = name}
+    func getUnitImageLink()-> String{return unitImageLink}
+    
+    func setConversationImageLink(name:String){conversationImageLink = name}
+    func getConversationImageLink()-> String{return conversationImageLink}
+    
+    func addConversationSentence(sentence:String){conversation.append(sentence)}
+    func getAndRemoveHeadConversationSentence() -> String{
+        let sentence = conversation.removeAtIndex(0)
+        return sentence
+    }
+    func getConversationsLength() -> Int{return conversation.count}
 }
 let globalUtility = GlobalUtility()

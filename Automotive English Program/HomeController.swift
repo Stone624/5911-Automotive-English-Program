@@ -55,7 +55,7 @@ class HomeController: UIViewController{
 
     @IBAction func BlogButtonPressed(sender: AnyObject) {
         print("Going to blog.")
-        if let url = NSURL(string: "http://www.amazon.com") {
+        if let url = NSURL(string: "http://u.osu.edu/intermediate/") {
             UIApplication.sharedApplication().openURL(url)
         } else {
             print("invalid url")
