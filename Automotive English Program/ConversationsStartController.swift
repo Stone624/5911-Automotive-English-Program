@@ -13,10 +13,13 @@ import Foundation
 
 class ConversationsStartController: UIViewController{
     
+    @IBOutlet weak var ConversationImage: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         print("Conversations Start Page loaded.")
+        ConversationImage.image = UIImage.init(named: globalUtility.getConversationImageLink())
+        print("Convo Image \(globalUtility.getConversationImageLink()) Posted.")
     }
 }

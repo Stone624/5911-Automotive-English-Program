@@ -16,13 +16,14 @@ class GlobalUtility {
     var conversationImageLink:String = ""
     var conversation = [String]()
     //Methods
+    ////Language Setting
     func getIsEnglishLanguageSetting() -> Bool{
         return currentLanguageIsEnglish
     }
     func switchLanguageSetting(){
         currentLanguageIsEnglish = !currentLanguageIsEnglish
     }
-    
+    ////Unit Page Stuff
     func setUnitName(name:String){unitName = name}
     func getUnitName() -> String{return unitName}
     

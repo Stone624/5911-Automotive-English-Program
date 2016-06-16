@@ -19,4 +19,11 @@ class ConversationsOneController: UIViewController{
         // Do any additional setup after loading the view, typically from a nib.
         print("Conversations 1 Page loaded.")
     }
+    override func viewDidAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        sleep(10)
+        print("Finished Playing video, going to camera")
+        let vc = self.storyboard?.instantiateViewControllerWithIdentifier("ConversationsTwoController")
+        self.presentViewController(vc! as UIViewController, animated: true, completion: nil)
+    }
 }

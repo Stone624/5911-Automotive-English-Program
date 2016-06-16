@@ -11,12 +11,16 @@
 import UIKit
 import Foundation
 
-class Lesson1: UIViewController{
+class Lesson1Unit1: UIViewController{
     
+    @IBOutlet weak var UnitMainImage: UIImageView!
+    @IBOutlet weak var UnitName: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        print("Lesson 1 Page loaded.")
+        print("Lesson 1 Unit 1 Page loaded.")
+        UnitMainImage.image = UIImage.init(named: "5911HomePageMan.png")
+        print("Image posted.")
     }
 }
