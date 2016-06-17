@@ -13,17 +13,33 @@ import Foundation
 
 class ConversationsOneController: UIViewController{
     
+    @IBOutlet weak var SentenceLabel: UILabel!
+    var redirectToHome:Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        var sentence = ""
+        if(globalUtility.getConversationsLength() != 0){
+            sentence = globalUtility.getAndRemoveHeadConversationSentence()
+            SentenceLabel.text = sentence
+        } else {
+            redirectToHome = true
+        }        
         print("Conversations 1 Page loaded.")
     }
     override func viewDidAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        sleep(10)
-        print("Finished Playing video, going to camera")
-        let vc = self.storyboard?.instantiateViewControllerWithIdentifier("ConversationsTwoController")
-        self.presentViewController(vc! as UIViewController, animated: true, completion: nil)
+        if(!redirectToHome){
+            sleep(5)
+            print("Finished Playing video, going to camera")
+            let vc = self.storyboard?.instantiateViewControllerWithIdentifier("ConversationsTwoController")
+            self.presentViewController(vc! as UIViewController, animated: true, completion: nil)
+        } else {
+            print("Length of conversations is now 0, Exiting back to home.")
+            let vc = self.storyboard?.instantiateViewControllerWithIdentifier("HomePageNavigationController")
+            self.presentViewController(vc! as UIViewController, animated: true, completion: nil)
+        }
     }
+
 }

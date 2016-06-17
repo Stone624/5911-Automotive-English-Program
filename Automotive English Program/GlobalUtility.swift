@@ -30,6 +30,7 @@ class GlobalUtility {
     func setUnitImageLink(name:String){unitImageLink = name}
     func getUnitImageLink()-> String{return unitImageLink}
     
+    ////Conversation page stuff
     func setConversationImageLink(name:String){conversationImageLink = name}
     func getConversationImageLink()-> String{return conversationImageLink}
     

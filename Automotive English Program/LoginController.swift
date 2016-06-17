@@ -36,7 +36,7 @@ class LoginController: UIViewController,UITextFieldDelegate{
         print("Username entered: \(username)")
         print("Password entered: \(password)")
         
-        if username == "bob" && password == "pass"{
+        if username == "" && password == ""{
             print("Access granted")
             let vc = self.storyboard?.instantiateViewControllerWithIdentifier("HomePageNavigationController")
             self.presentViewController(vc! as UIViewController, animated: true, completion: nil)

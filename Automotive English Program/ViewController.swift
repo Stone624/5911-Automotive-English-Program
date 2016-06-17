@@ -21,6 +21,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     let saveFileName = "outputVideo.mov"
     @IBOutlet weak var CaptureButton: UIButton!
     @IBOutlet weak var PasswordField: UITextField!
+    @IBOutlet weak var SentenceLabel: UILabel!
+    var redirectToHome:Bool = false
     
     //
     let captureSession = AVCaptureSession()
@@ -42,7 +44,14 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
+        var sentence = ""
+        if(globalUtility.getConversationsLength() != 0){
+            sentence = globalUtility.getAndRemoveHeadConversationSentence()
+            SentenceLabel.text = sentence
+        } else {
+            redirectToHome = true
+        }
+
         // Do any additional setup after loading the view, typically from a nib.
         captureSession.sessionPreset = AVCaptureSessionPresetHigh
         
@@ -65,6 +74,20 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                     }
                 }
             }
+        }
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        if(!redirectToHome){
+            sleep(5)
+            print("Finished Recording response, going to next video")
+            let vc = self.storyboard?.instantiateViewControllerWithIdentifier("ConversationsOneController")
+            self.presentViewController(vc! as UIViewController, animated: true, completion: nil)
+        } else {
+            print("Length of conversations is now 0, Exiting back to home.")
+            let vc = self.storyboard?.instantiateViewControllerWithIdentifier("HomePageNavigationController")
+            self.presentViewController(vc! as UIViewController, animated: true, completion: nil)
+            //exit(0)
         }
     }
     
