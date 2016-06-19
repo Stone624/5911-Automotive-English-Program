@@ -9,7 +9,7 @@
 import UIKit
 import Foundation
 
-class Lesson1Unit1Table: UITableViewController{
+class UnitTable: UITableViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -38,15 +38,6 @@ class Lesson1Unit1Table: UITableViewController{
         case 0:
             print("Pronunciations Pressed.")
         case 1:
-            globalUtility.setConversationImageLink("5911HomePageMan.png")
-            globalUtility.addConversationSentence("Hi, I'm Mia Clarkson")
-            globalUtility.addConversationSentence("Hi, My name is [your full name]")
-            globalUtility.addConversationSentence("It's nice to meet you")
-            globalUtility.addConversationSentence("It's nice to meet you too.")
-            globalUtility.addConversationSentence("Where are you from?")
-            globalUtility.addConversationSentence("I'm from [your home town], Japan. Where are you from?")
-            globalUtility.addConversationSentence("I'm from Toronto Canada.")
-            globalUtility.addConversationSentence("I see.")
             let vc = self.storyboard?.instantiateViewControllerWithIdentifier("ConversationsStartController")
             self.presentViewController(vc! as UIViewController, animated: true, completion: nil)
         case 2:

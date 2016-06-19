@@ -11,7 +11,7 @@
 import UIKit
 import Foundation
 
-class Lesson1Unit1: UIViewController{
+class Unit: UIViewController{
     
     @IBOutlet weak var UnitMainImage: UIImageView!
     @IBOutlet weak var UnitName: UILabel!
@@ -19,8 +19,10 @@ class Lesson1Unit1: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        print("Lesson 1 Unit 1 Page loaded.")
-        UnitMainImage.image = UIImage.init(named: "5911HomePageMan.png")
+        print("Unit \(globalUtility.getUnitNumber()) Page loaded.")
+        self.navigationItem.title = "Unit \(globalUtility.getUnitNumber())"
+        self.UnitName.text = globalUtility.getUnitName()
+        UnitMainImage.image = UIImage.init(named: globalUtility.getUnitImageLink())
         print("Image posted.")
     }
 }
