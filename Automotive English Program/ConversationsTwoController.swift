@@ -10,6 +10,11 @@
 //THING TO NOTE: Make sure your're connected to the internet (wifi or ceullular),
 //make sure capturesession is stopped (not just output session)
 
+//things tried to fix audio issue:
+////        asset3.cancelPendingPrerolls()//will this do anything?
+//            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ConversationsTwoController.itemDidFinishPlaying), name: AVPlayerItemDidPlayToEndTimeNotification, object: asset3)//added end notif
+//  programatically skipping
+
 import UIKit
 import AVKit
 import MobileCoreServices
@@ -31,11 +36,12 @@ class ConversationsTwoController: UIViewController, AVCaptureFileOutputRecording
     var previewLayer : AVCaptureVideoPreviewLayer?
     var captureDeviceVideo : AVCaptureDevice?
     var captureDeviceAudio : AVCaptureDevice?
-    var videoOutputStrings : [String] = []
+    var videoOutputStrings : [String] = [] // Should be Global Utility
     var asset1: AVAsset?
     var asset2: AVPlayerItem?
     var asset3 = AVPlayer()
     var videoPlaybackAsset : AVPlayerLayer?
+    
     //Function to redirect when completed.
     override func viewDidAppear(animated: Bool) {
         if(redirectToHome){
@@ -44,6 +50,7 @@ class ConversationsTwoController: UIViewController, AVCaptureFileOutputRecording
             self.presentViewController(vc! as UIViewController, animated: true, completion: nil)
         }
     }
+    
 //Functions for initialisation of video capture block
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -98,7 +105,12 @@ class ConversationsTwoController: UIViewController, AVCaptureFileOutputRecording
             }
             device.unlockForConfiguration()
         }
-        
+        if let device = captureDeviceAudio {
+            try device.lockForConfiguration()
+            //could do configuration for audio here...
+            device.unlockForConfiguration()
+        }
+
     }
     
     func beginSession() throws {
@@ -116,7 +128,9 @@ class ConversationsTwoController: UIViewController, AVCaptureFileOutputRecording
             let output = AVCaptureMovieFileOutput()
             output.maxRecordedDuration = CMTimeMakeWithSeconds(20, 1)
             output.minFreeDiskSpaceLimit = 100000000
-            output.movieFragmentInterval = kCMTimeInvalid//Will this fix sound??
+            //changing movieFragmentInterval doesn't do shit. Tried 1 and 300 and Invalid.
+                //let fragmentInterval:CMTime = CMTimeMake(300, 1)
+                //output.movieFragmentInterval = fragmentInterval//kCMTimeInvalid
             captureSession.addOutput(output)
             print("creating preview layer and adding it to the page.")
             previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
@@ -233,6 +247,10 @@ class ConversationsTwoController: UIViewController, AVCaptureFileOutputRecording
         } else {
             print("File NOT written successfully. Something exploded along the way. ERROR: \(error)")
         }
+    }
+    
+    func itemDidFinishPlaying(notification:NSNotification){
+        print("ITEM FINISHED PLAYING.")
     }
     
 ////////////////////////////////////////////////////////////////
