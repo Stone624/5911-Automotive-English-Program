@@ -24,6 +24,10 @@
 		32A36B271CED5ACB001CE145 /* Automotive_English_ProgramTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A36B261CED5ACB001CE145 /* Automotive_English_ProgramTests.swift */; };
 		32A36B321CED5ACB001CE145 /* Automotive_English_ProgramUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A36B311CED5ACB001CE145 /* Automotive_English_ProgramUITests.swift */; };
 		32AC48CA1CF39700005DE742 /* 5911HomePageMan.png in Resources */ = {isa = PBXBuildFile; fileRef = 32AC48C91CF39700005DE742 /* 5911HomePageMan.png */; };
+		32D595161D1B8B3C001EE6AB /* TestAudioHaru.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 32D595121D1B8B3C001EE6AB /* TestAudioHaru.mp3 */; };
+		32D595171D1B8B3C001EE6AB /* TestAudioSeseragi.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 32D595131D1B8B3C001EE6AB /* TestAudioSeseragi.mp3 */; };
+		32D595181D1B8B3C001EE6AB /* TestVideo1.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 32D595141D1B8B3C001EE6AB /* TestVideo1.mp4 */; };
+		32D595191D1B8B3C001EE6AB /* TestVideo2.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 32D595151D1B8B3C001EE6AB /* TestVideo2.mp4 */; };
 		32DEB5751CEF50D100FF30B1 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32DEB5741CEF50D100FF30B1 /* MobileCoreServices.framework */; };
 		32F13F921CF66B0600236609 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32F13F911CF66B0600236609 /* HomeController.swift */; };
 /* End PBXBuildFile section */
@@ -69,6 +73,10 @@
 		32A36B311CED5ACB001CE145 /* Automotive_English_ProgramUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Automotive_English_ProgramUITests.swift; sourceTree = "<group>"; };
 		32A36B331CED5ACB001CE145 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		32AC48C91CF39700005DE742 /* 5911HomePageMan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 5911HomePageMan.png; sourceTree = "<group>"; };
+		32D595121D1B8B3C001EE6AB /* TestAudioHaru.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = TestAudioHaru.mp3; path = ../../../TestAudioHaru.mp3; sourceTree = "<group>"; };
+		32D595131D1B8B3C001EE6AB /* TestAudioSeseragi.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = TestAudioSeseragi.mp3; path = ../../../TestAudioSeseragi.mp3; sourceTree = "<group>"; };
+		32D595141D1B8B3C001EE6AB /* TestVideo1.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = TestVideo1.mp4; path = ../../../TestVideo1.mp4; sourceTree = "<group>"; };
+		32D595151D1B8B3C001EE6AB /* TestVideo2.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = TestVideo2.mp4; path = ../../../TestVideo2.mp4; sourceTree = "<group>"; };
 		32DEB5741CEF50D100FF30B1 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		32F13F911CF66B0600236609 /* HomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -123,6 +131,10 @@
 		32A36B101CED5ACB001CE145 /* Automotive English Program */ = {
 			isa = PBXGroup;
 			children = (
+				32D595121D1B8B3C001EE6AB /* TestAudioHaru.mp3 */,
+				32D595131D1B8B3C001EE6AB /* TestAudioSeseragi.mp3 */,
+				32D595141D1B8B3C001EE6AB /* TestVideo1.mp4 */,
+				32D595151D1B8B3C001EE6AB /* TestVideo2.mp4 */,
 				3284464A1D05C3DC004CEE4E /* 5911Conversations1.png */,
 				32AC48C91CF39700005DE742 /* 5911HomePageMan.png */,
 				32A36B111CED5ACB001CE145 /* AppDelegate.swift */,
@@ -270,6 +282,10 @@
 				3284464B1D05C3DC004CEE4E /* 5911Conversations1.png in Resources */,
 				32AC48CA1CF39700005DE742 /* 5911HomePageMan.png in Resources */,
 				32A36B1C1CED5ACB001CE145 /* LaunchScreen.storyboard in Resources */,
+				32D595171D1B8B3C001EE6AB /* TestAudioSeseragi.mp3 in Resources */,
+				32D595161D1B8B3C001EE6AB /* TestAudioHaru.mp3 in Resources */,
+				32D595191D1B8B3C001EE6AB /* TestVideo2.mp4 in Resources */,
+				32D595181D1B8B3C001EE6AB /* TestVideo1.mp4 in Resources */,
 				32A36B191CED5ACB001CE145 /* Assets.xcassets in Resources */,
 				32A36B171CED5ACB001CE145 /* Main.storyboard in Resources */,
 			);
