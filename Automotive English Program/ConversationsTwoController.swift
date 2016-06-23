@@ -20,12 +20,13 @@ class ConversationsTwoController: UIViewController, AVCaptureFileOutputRecording
 //Delcare Class-wide Variables
     @IBOutlet weak var SentenceLabel: UILabel!
     var redirectToHome:Bool = false
+    //button stuff
     var buttonStart: UIButton!
     var buttonStop: UIButton!
     var buttonRerecord: UIButton!
     var buttonPlayback: UIButton!
     var buttonSubmit: UIButton!
-    
+    //video stuff
     let captureSession = AVCaptureSession()
     var previewLayer : AVCaptureVideoPreviewLayer?
     var captureDeviceVideo : AVCaptureDevice?
@@ -33,7 +34,7 @@ class ConversationsTwoController: UIViewController, AVCaptureFileOutputRecording
     var videoOutputStrings : [String] = []
     var asset1: AVAsset?
     var asset2: AVPlayerItem?
-    var asset3: AVPlayer?
+    var asset3 = AVPlayer()
     var videoPlaybackAsset : AVPlayerLayer?
     //Function to redirect when completed.
     override func viewDidAppear(animated: Bool) {
@@ -54,6 +55,15 @@ class ConversationsTwoController: UIViewController, AVCaptureFileOutputRecording
         } else {redirectToHome = true}
         // Create capture session and find camera
         captureSession.sessionPreset = AVCaptureSessionPresetHigh
+        getVideoInputs()
+        if(captureDeviceAudio != nil && captureDeviceVideo != nil){
+            do{
+                try beginSession()
+            } catch {print("Caught an exception in beginSession().")}
+        }
+    }
+    
+    func getVideoInputs(){
         let devices = AVCaptureDevice.devices()
         // Loop through all the capture devices on this phone
         for device in devices {
@@ -71,16 +81,12 @@ class ConversationsTwoController: UIViewController, AVCaptureFileOutputRecording
             if (device.hasMediaType(AVMediaTypeAudio)){
                 captureDeviceAudio = device as? AVCaptureDevice
                 if(captureDeviceAudio != nil){
-                    print("Video Capture device found")
+                    print("Audio Capture device found")
                     print("USING DEVICE: \(device)")
                 }
             }
-            if(captureDeviceAudio != nil && captureDeviceVideo != nil){
-                do{
-                    try beginSession()
-                } catch {print("Caught an exception in beginSession().")}
-            }
         }
+
     }
     
     func configureDevice() throws {
@@ -110,6 +116,7 @@ class ConversationsTwoController: UIViewController, AVCaptureFileOutputRecording
             let output = AVCaptureMovieFileOutput()
             output.maxRecordedDuration = CMTimeMakeWithSeconds(20, 1)
             output.minFreeDiskSpaceLimit = 100000000
+            output.movieFragmentInterval = kCMTimeInvalid//Will this fix sound??
             captureSession.addOutput(output)
             print("creating preview layer and adding it to the page.")
             previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
@@ -171,9 +178,6 @@ class ConversationsTwoController: UIViewController, AVCaptureFileOutputRecording
         buttonPlayback.hidden = false
         buttonSubmit.hidden = false
         
-//        let tmpDirURL = NSURL.fileURLWithPath(NSTemporaryDirectory(), isDirectory: true)
-//        let fileURL = tmpDirURL.URLByAppendingPathComponent("\(videoOutputStrings[videoOutputStrings.count-1])").URLByAppendingPathExtension("mov")
-//        print("FilePath: \(fileURL.path) COMPARED TO MOVIEURL")
         let filePath = "/tmp/\(videoOutputStrings[videoOutputStrings.count-1])"
         let fileManager = NSFileManager.defaultManager()
         if fileManager.fileExistsAtPath(filePath) {print("FILE \(filePath) EXISTS")} else {print("FILE DNE")}
@@ -182,38 +186,28 @@ class ConversationsTwoController: UIViewController, AVCaptureFileOutputRecording
         asset1 = AVAsset(URL: movieURL)
         print("ASSET1 TRACKS: \(asset1?.tracks)")
         print("ASSET1 IS PLAYABLE: \(asset1?.playable)")
-        asset2 = AVPlayerItem(URL: movieURL/*asset: asset1!*/)
-        print("ASSET2 TRACKS: \(asset2?.tracks)")
-        if(asset2?.status == AVPlayerItemStatus.ReadyToPlay){
-            print("Asset2 Duration: \(asset2?.duration)")
-            print("Current Time of Asset2: \(asset2?.currentTime())")
-        } else{
-            print("STATUS IS NOT READY TO PLAY: \(asset2?.status)")
-        }
-        asset3 = AVPlayer(URL: movieURL/*playerItem: asset2!*/)
-        asset3!.seekToTime(kCMTimeZero)
-        print("ASSET3 STATUS: \(asset3?.status.rawValue)")
+        asset2 = AVPlayerItem(asset: asset1!)
+        print("VIDEO DURATION: \(asset2?.duration)")
+//        if(asset2?.status == AVPlayerItemStatus.ReadyToPlay){
+//        asset3 = AVPlayer(playerItem: asset2!)
+        asset3.replaceCurrentItemWithPlayerItem(asset2)
+        asset3.seekToTime(kCMTimeZero)
+        asset3.actionAtItemEnd = AVPlayerActionAtItemEnd.Pause
         videoPlaybackAsset = AVPlayerLayer(player: asset3)
         videoPlaybackAsset!.frame = CGRectMake(20, 130, 260, 250)
         videoPlaybackAsset!.backgroundColor = UIColor.orangeColor().CGColor
         videoPlaybackAsset?.videoGravity = AVLayerVideoGravityResizeAspect
         self.view.layer.addSublayer(videoPlaybackAsset!)
-        print("VIDEO ASPECT: \(videoPlaybackAsset?.videoRect)")
-                if(videoPlaybackAsset?.readyForDisplay == true){
-            print("VIDEO PLAYER LAYER READY")
-        } else{
-            print("VIDEO PLAYER LAYER NOT READY!! :(")
-            print("This is may be because.... \(asset3?.currentItem) MAY BE NULL???")
-        }
+//                if(videoPlaybackAsset?.readyForDisplay == true){
     }
     func PlaybackButtonPressed(sender: UIButton!) {
         print("Playback button Pressed! :)")
-        asset3?.seekToTime(kCMTimeZero)
-        videoPlaybackAsset?.player?.play()
+        asset3.seekToTime(kCMTimeZero)
+        asset3.play()
     }
     func SubmitButtonPressed(sender: UIButton!) {
         print("Submit button Pressed! :)")
-        sendVideoDataViaFTP("",password: "",ip: "",fileName: videoOutputStrings[videoOutputStrings.count-1])
+        sendVideoDataViaFTP("TylerStone",password: "",ip: "192.168.1.110",fileName: videoOutputStrings[videoOutputStrings.count-1])
         let vc = self.storyboard?.instantiateViewControllerWithIdentifier("ConversationsOneController")
         self.presentViewController(vc! as UIViewController, animated: true, completion: nil)
     }
@@ -234,11 +228,14 @@ class ConversationsTwoController: UIViewController, AVCaptureFileOutputRecording
                                                              fromConnections connections: [AnyObject]!,
                                                                              error: NSError!){
         if(error == nil){
-        print("Finished Recording. File successfully created. Link should be /tmp/\(videoOutputStrings[videoOutputStrings.count-1])")
+        print("Finished Recording. File successfully created. Link should be /tmp/\(videoOutputStrings[videoOutputStrings.count-1]), is actually \(outputFileURL)")
+            print("USED CONNECTIONS: \(connections)")
         } else {
             print("File NOT written successfully. Something exploded along the way. ERROR: \(error)")
         }
     }
+    
+////////////////////////////////////////////////////////////////
     
     //FTP Send Data Method
     func sendVideoDataViaFTP(username:String,password:String,ip:String,fileName:String){
@@ -268,7 +265,6 @@ class ConversationsTwoController: UIViewController, AVCaptureFileOutputRecording
                 if (bytesWritten < fileLength) {
                     bytesLeft = fileLength - totalBytesWritten
                     memmove(buf3, buf2 + bytesWritten, bytesLeft)
-                    //buf = UnsafePointer<UInt8>((videoData?.bytes)!+totalBytesWritten)
                 }else{bytesLeft = 0}
                 print("Bytes Left: \(bytesLeft)")
                 if CFWriteStreamCanAcceptBytes(FTPStream) == false{sleep(1)}
