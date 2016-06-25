@@ -15,6 +15,8 @@
 //            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ConversationsTwoController.itemDidFinishPlaying), name: AVPlayerItemDidPlayToEndTimeNotification, object: asset3)//added end notif
 //  programatically skipping
 
+// FIXED(sort of): AVAudioSession use.
+
 import UIKit
 import AVKit
 import MobileCoreServices
@@ -39,8 +41,9 @@ class ConversationsTwoController: UIViewController, AVCaptureFileOutputRecording
     var videoOutputStrings : [String] = [] // Should be Global Utility
     var asset1: AVAsset?
     var asset2: AVPlayerItem?
-    var asset3 = AVPlayer()
+    var asset3: AVPlayer?
     var videoPlaybackAsset : AVPlayerLayer?
+    var asset5 = AVAudioSession.sharedInstance()
     
     //Function to redirect when completed.
     override func viewDidAppear(animated: Bool) {
@@ -62,11 +65,15 @@ class ConversationsTwoController: UIViewController, AVCaptureFileOutputRecording
         } else {redirectToHome = true}
         // Create capture session and find camera
         captureSession.sessionPreset = AVCaptureSessionPresetHigh
+        captureSession.usesApplicationAudioSession = true
+        captureSession.automaticallyConfiguresApplicationAudioSession = true
         getVideoInputs()
         if(captureDeviceAudio != nil && captureDeviceVideo != nil){
             do{
                 try beginSession()
             } catch {print("Caught an exception in beginSession().")}
+        } else {
+            print("ERROR: Could not find both front camera and microphone.")
         }
     }
     
@@ -80,16 +87,14 @@ class ConversationsTwoController: UIViewController, AVCaptureFileOutputRecording
                 if(device.position == AVCaptureDevicePosition.Front) {
                     captureDeviceVideo = device as? AVCaptureDevice
                     if captureDeviceVideo != nil {
-                        print("Video Capture device found")
-                        print("USING DEVICE: \(device)")
+                        print("USING VIDEO DEVICE: \(device)")
                     }
                 }
             }
             if (device.hasMediaType(AVMediaTypeAudio)){
                 captureDeviceAudio = device as? AVCaptureDevice
                 if(captureDeviceAudio != nil){
-                    print("Audio Capture device found")
-                    print("USING DEVICE: \(device)")
+                    print("USING AUDIO DEVICE: \(device)")
                 }
             }
         }
@@ -97,7 +102,6 @@ class ConversationsTwoController: UIViewController, AVCaptureFileOutputRecording
     }
     
     func configureDevice() throws {
-        print("Configuring Camera Device...")
         if let device = captureDeviceVideo {
             try device.lockForConfiguration()
             if(device.isFlashModeSupported(AVCaptureFlashMode.Off)){
@@ -119,16 +123,15 @@ class ConversationsTwoController: UIViewController, AVCaptureFileOutputRecording
         try configureDevice()
         do {
             //setup device input/output/preview
-            print("Creating camera input and adding to session.")
+            print("Creating input/output and adding to capture session.")
             let inputVideo = try AVCaptureDeviceInput(device: captureDeviceVideo)
             captureSession.addInput(inputVideo)
             let inputAudio = try AVCaptureDeviceInput(device: captureDeviceAudio)
             captureSession.addInput(inputAudio)
-            print("Creating video output and adding to session.")
             let output = AVCaptureMovieFileOutput()
             output.maxRecordedDuration = CMTimeMakeWithSeconds(20, 1)
             output.minFreeDiskSpaceLimit = 100000000
-            //changing movieFragmentInterval doesn't do shit. Tried 1 and 300 and Invalid.
+            //changing movieFragmentInterval doesn't effect anything. Tried 1 and 300 and Invalid.
                 //let fragmentInterval:CMTime = CMTimeMake(300, 1)
                 //output.movieFragmentInterval = fragmentInterval//kCMTimeInvalid
             captureSession.addOutput(output)
@@ -170,22 +173,37 @@ class ConversationsTwoController: UIViewController, AVCaptureFileOutputRecording
             self.view.addSubview(buttonRerecord)
             //begin capture
             print("Begin Running Capture Session.")
-            captureSession.startRunning()
+            do{
+                try asset5.setActive(false)
+            } catch{print("Failed to end AVAudioSession for capturesession's auto configuration.")}
+            captureSession.startRunning() // configures audio recording here.
         } catch {print("EXPLOSION! (video attempt blew up.")}
     }
     func StartButtonPressed(sender: UIButton!) {
         print("Start button Pressed! :)")
+        print("CURRENT ROUTE: \(asset5.currentRoute)")
+        print("CURRENT OUTPUT SOURCE: \(asset5.outputDataSource)")
+        print("Selected from: \(asset5.outputDataSources)")
         buttonStart.hidden = true
         buttonStop.hidden = false
         let str = "CCV\(Int(NSDate().timeIntervalSince1970)).mov"
         videoOutputStrings.append(str)
-        print("capturesession INPUTS: \(captureSession.inputs)")
+        print("capture session currently using INPUTS: \(captureSession.inputs)")
+//        do{
+//            try asset5.setCategory(AVAudioSessionCategoryPlayAndRecord)
+////            try asset5.setActive(true)
+//            print("AVAudioSessionCategory switched to PLAYANDRECORD.")
+//        } catch{print("Could not activate audio session.")}
         captureSession.outputs[0].startRecordingToOutputFileURL(NSURL(fileURLWithPath: "/tmp/\(str)"), recordingDelegate: self)
     }
     func StopButtonPressed(sender: UIButton!) {
         print("STOP button pressed")
+        print("CURRENT ROUTE: \(asset5.currentRoute)")
+        print("BEFORE STOP RECORD CATEGORY: \(asset5.category)")
         captureSession.outputs[0].stopRecording()
-        captureSession.stopRunning()
+        print("AFTER STOP RECORD CATEGORY: \(asset5.category)")
+        captureSession.stopRunning() // what happens here?
+        print("AFTER STOP RUNNING CATEGORY: \(asset5.category)")
         previewLayer?.hidden = true
         buttonStop.hidden = true
         buttonRerecord.hidden = false
@@ -203,30 +221,59 @@ class ConversationsTwoController: UIViewController, AVCaptureFileOutputRecording
         asset2 = AVPlayerItem(asset: asset1!)
         print("VIDEO DURATION: \(asset2?.duration)")
 //        if(asset2?.status == AVPlayerItemStatus.ReadyToPlay){
-//        asset3 = AVPlayer(playerItem: asset2!)
-        asset3.replaceCurrentItemWithPlayerItem(asset2)
-        asset3.seekToTime(kCMTimeZero)
-        asset3.actionAtItemEnd = AVPlayerActionAtItemEnd.Pause
+        asset3 = AVPlayer(playerItem: asset2!)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(playerDidFinishPlaying),
+                                                         name: AVPlayerItemDidPlayToEndTimeNotification, object: asset3!.currentItem)
+//        asset3.replaceCurrentItemWithPlayerItem(asset2)
+        asset3!.seekToTime(kCMTimeZero)
+        asset3!.actionAtItemEnd = AVPlayerActionAtItemEnd.Pause
         videoPlaybackAsset = AVPlayerLayer(player: asset3)
         videoPlaybackAsset!.frame = CGRectMake(20, 130, 260, 250)
         videoPlaybackAsset!.backgroundColor = UIColor.orangeColor().CGColor
         videoPlaybackAsset?.videoGravity = AVLayerVideoGravityResizeAspect
         self.view.layer.addSublayer(videoPlaybackAsset!)
+        print("AFTER PLAYBACK ASSETS CREATED CATEGORY: \(asset5.category)")
 //                if(videoPlaybackAsset?.readyForDisplay == true){
+//        do{
+//            try asset5.setCategory(AVAudioSessionCategoryPlayAndRecord)
+////            try asset5.setActive(true)
+//            print("AVAudioSessionCategory switched to PLAYANDRECORD.")
+//        } catch{print("Could not activate audio session for playback.")}
+        print("CURRENT ROUTE: \(asset5.currentRoute)")
     }
     func PlaybackButtonPressed(sender: UIButton!) {
         print("Playback button Pressed! :)")
-        asset3.seekToTime(kCMTimeZero)
-        asset3.play()
+        print("CURRENT ROUTE: \(asset5.currentRoute)")
+        asset3!.seekToTime(kCMTimeZero)
+        asset3!.play()
     }
     func SubmitButtonPressed(sender: UIButton!) {
         print("Submit button Pressed! :)")
+        asset3 = nil
+//        do{
+//            try asset5.setActive(false)
+//        } catch{print("Could not deactivate audio session for finished video playback audio session.")}
         sendVideoDataViaFTP("TylerStone",password: "",ip: "192.168.1.110",fileName: videoOutputStrings[videoOutputStrings.count-1])
         let vc = self.storyboard?.instantiateViewControllerWithIdentifier("ConversationsOneController")
         self.presentViewController(vc! as UIViewController, animated: true, completion: nil)
     }
     func RerecordButtonPressed(sender: UIButton!){
         print("Rerecord Button Pressed")
+//        var i = 0
+//        var success = false
+//        asset1=nil
+//        asset2=nil
+        stopPlayer()
+//        while !success && i<20{
+//            do{
+//                try asset5.setActive(false)
+//                success = true
+//            } catch{
+//                i=i+1
+//                print("\(i) Could not deactivate audio session for re-record pressed.")
+//                sleep(1)
+//            }
+//        }
         buttonRerecord.hidden = true
         buttonPlayback.hidden = true
         videoPlaybackAsset?.hidden = true
@@ -236,11 +283,27 @@ class ConversationsTwoController: UIViewController, AVCaptureFileOutputRecording
         captureSession.startRunning() // sound fucks off for some reason...
     }
     
+    func stopPlayer(){
+        if let play = asset3 {
+            print("stopped")
+            play.pause()
+            asset3 = nil
+            print("player deallocated")
+        } else {
+            print("player was already deallocated")
+        }
+    }
+    
     //Delegate methods
     func captureOutput(captureOutput: AVCaptureFileOutput!,
                          didFinishRecordingToOutputFileAtURL outputFileURL: NSURL!,
                                                              fromConnections connections: [AnyObject]!,
                                                                              error: NSError!){
+//        do{
+//            try asset5.setActive(false)
+//            print("Successfully turned off Audio Session.")
+//        } catch{print("Could not deactivate audio session for recording video.")}
+        print("AT OUTPUT CAPTURED CATEGORY: \(asset5.category)")
         if(error == nil){
         print("Finished Recording. File successfully created. Link should be /tmp/\(videoOutputStrings[videoOutputStrings.count-1]), is actually \(outputFileURL)")
             print("USED CONNECTIONS: \(connections)")
@@ -249,8 +312,11 @@ class ConversationsTwoController: UIViewController, AVCaptureFileOutputRecording
         }
     }
     
-    func itemDidFinishPlaying(notification:NSNotification){
-        print("ITEM FINISHED PLAYING.")
+    func playerDidFinishPlaying(note: NSNotification){
+        print("Item Finished Playing.")
+//        do{
+//            try asset5.setActive(false)
+//        } catch{print("Could not deactivate audio session for finished video playback audio session.")}
     }
     
 ////////////////////////////////////////////////////////////////
