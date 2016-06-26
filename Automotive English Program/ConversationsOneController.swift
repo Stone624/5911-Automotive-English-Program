@@ -14,6 +14,8 @@
 //  PlayerDidFinishPlaying:1. Unlock Audio
 //                         2. Redirect to next page.
 
+//NOTE DO NOT PROVIDE GLOBAL REFERENCE TO AVPLAYER DIRECTLY!! ONLY ACCESS AVPLAYER THROUGH AVPLAYERLAYER. IT WILL NOT FULLY DEALLOCATE AVPLAYER IF A GLOBAL VARIABLE REFERENCES IT, EVEN IF YOU DEREFERENCE IT WITH BOTH GLOBAL AND AVPLAYERLAYER.
+
 import UIKit
 import Foundation
 import AVFoundation
@@ -22,15 +24,11 @@ class ConversationsOneController: UIViewController{
     
     @IBOutlet weak var SentenceLabel: UILabel!
     var redirectToHome:Bool = false
-//    var asset1:AVAsset?
-//    var asset2:AVPlayerItem?
-    var asset3:AVPlayer?
     var videoPlaybackAsset:AVPlayerLayer?
-//    var asset5 = AVAudioSession.sharedInstance()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("Conversations 1 Page loaded.")
+        print("Conversations Page 1 loaded.")
         var sentence = ""
         if(globalUtility.getConversationsLength() != 0){
             sentence = globalUtility.getAndRemoveHeadConversationSentence()
@@ -48,7 +46,7 @@ class ConversationsOneController: UIViewController{
     override func viewDidAppear(animated: Bool) {
         super.viewWillAppear(animated)
         print("--Playing video.")
-        asset3?.play()
+        videoPlaybackAsset?.player?.play()
         if(redirectToHome){
             print("--Length of conversations is now 0, Exiting back to home.")
             do{
@@ -63,55 +61,38 @@ class ConversationsOneController: UIViewController{
     func initVideos(){
         let URL1 = NSBundle.mainBundle().pathForResource(/*globalUtility.getConversationAudioLink()*/"TestVideo1", ofType: "mp4")
         let movieURL = NSURL(fileURLWithPath: URL1!)
-//        asset1 = AVAsset(URL: movieURL)
-//        asset2 = AVPlayerItem(asset: asset1!)
-        asset3 = AVPlayer(URL: movieURL)
+        let asset3 = AVPlayer(URL: movieURL)
         NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(playerDidFinishPlaying),
-                                                         name: AVPlayerItemDidPlayToEndTimeNotification, object: asset3!.currentItem)
-        asset3!.seekToTime(kCMTimeZero)
-        asset3!.actionAtItemEnd = AVPlayerActionAtItemEnd.Pause
+                                                         name: AVPlayerItemDidPlayToEndTimeNotification, object: asset3.currentItem)
+        asset3.seekToTime(kCMTimeZero)
+        asset3.actionAtItemEnd = AVPlayerActionAtItemEnd.Pause
         videoPlaybackAsset = AVPlayerLayer(player: asset3)
         videoPlaybackAsset!.frame = CGRectMake(20, 130, 260, 250)
         videoPlaybackAsset!.backgroundColor = UIColor.orangeColor().CGColor
         videoPlaybackAsset?.videoGravity = AVLayerVideoGravityResizeAspect
-//        videoPlaybackAsset?.zPosition = 2
         self.view.layer.addSublayer(videoPlaybackAsset!)
     }
 
     func playerDidFinishPlaying(note: NSNotification){
+        videoPlaybackAsset?.player?.pause()
+        videoPlaybackAsset?.player = nil
         videoPlaybackAsset?.removeFromSuperlayer()
         videoPlaybackAsset = nil
-//        AudioOutputUnitStop()
-//        AudioUnitUninitialize(<#T##inUnit: AudioUnit##AudioUnit#>)
-//        print("playback layer removed and nilled")
-//        sleep(5)
-//        asset3?.cancelPendingPrerolls()
-//        asset3 = nil
-//        asset2?.cancelPendingSeeks()
-//        asset2 = nil
-//        asset1?.cancelLoading()
-//        asset1 = nil
-//        var success = false
-//        var iteration = 1
-//        while(!success && iteration < 500){
-//            do{
-//                try AVAudioSession.sharedInstance().setActive(false)
-//                print("--Audio Session successfully destroyed.")
-//                success = true
-//            } catch{
-//                print("**ERROR\(iteration): Could not deactivate audio session.")
-////                print(">>ASSET1: \(asset1)")
-////                print(">>ASSET2: \(asset2)")
-////                print(">>ASSET3: \(asset3)")
-////                print(">>videoPlaybackAsset: \(videoPlaybackAsset)")
-////                print(">>Number of audio output channels: \(asset5.outputNumberOfChannels)")
-////                print(">>Number of MAX audio output channels: \(asset5.maximumOutputNumberOfChannels)")
-////                print(">>Number of audio Input channels: \(asset5.inputNumberOfChannels)")
-////                print(">>Number of MAX audio input channels: \(asset5.maximumInputNumberOfChannels)")
-//                iteration = iteration + 1
-//                sleep(1)
-//            }
-//        }
+
+        print("playback layer removed and nilled")
+        var success = false
+        var iteration = 1
+        while(!success && iteration < 500){
+            do{
+                try AVAudioSession.sharedInstance().setActive(false)
+                print("--Audio Session successfully destroyed.")
+                success = true
+            } catch{
+                print("**ERROR\(iteration): Could not deactivate audio session.")
+                iteration = iteration + 1
+                sleep(1)
+            }
+        }
         print("--Finished Playing video, going to camera")
         let vc = self.storyboard?.instantiateViewControllerWithIdentifier("ConversationsTwoController")
         self.presentViewController(vc! as UIViewController, animated: true, completion: nil)

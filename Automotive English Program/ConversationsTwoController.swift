@@ -39,11 +39,7 @@ class ConversationsTwoController: UIViewController, AVCaptureFileOutputRecording
     var captureDeviceVideo : AVCaptureDevice?
     var captureDeviceAudio : AVCaptureDevice?
     var videoOutputStrings : [String] = [] // Should be Global Utility
-    var asset1: AVAsset?
-    var asset2: AVPlayerItem?
-    var asset3: AVPlayer?
     var videoPlaybackAsset : AVPlayerLayer?
-    var asset5 = AVAudioSession.sharedInstance()
     
     //Function to redirect when completed.
     override func viewDidAppear(animated: Bool) {
@@ -173,37 +169,38 @@ class ConversationsTwoController: UIViewController, AVCaptureFileOutputRecording
             self.view.addSubview(buttonRerecord)
             //begin capture
             print("Begin Running Capture Session.")
-            do{
-                try asset5.setActive(false)
-            } catch{print("Failed to end AVAudioSession for capturesession's auto configuration.")}
+            var success = false
+            var iteration = 1
+            while(!success && iteration < 500){
+                do{
+                    try AVAudioSession.sharedInstance().setActive(false)
+                    print("--Audio Session successfully destroyed pre-captureSession.")
+                    success = true
+                } catch{
+                    print("**ERROR\(iteration): Could not deactivate audio session.")
+                    iteration = iteration + 1
+                    sleep(1)
+                }
+            }
             captureSession.startRunning() // configures audio recording here.
         } catch {print("EXPLOSION! (video attempt blew up.")}
     }
     func StartButtonPressed(sender: UIButton!) {
         print("Start button Pressed! :)")
-        print("CURRENT ROUTE: \(asset5.currentRoute)")
-        print("CURRENT OUTPUT SOURCE: \(asset5.outputDataSource)")
-        print("Selected from: \(asset5.outputDataSources)")
         buttonStart.hidden = true
         buttonStop.hidden = false
         let str = "CCV\(Int(NSDate().timeIntervalSince1970)).mov"
         videoOutputStrings.append(str)
         print("capture session currently using INPUTS: \(captureSession.inputs)")
-//        do{
-//            try asset5.setCategory(AVAudioSessionCategoryPlayAndRecord)
-////            try asset5.setActive(true)
-//            print("AVAudioSessionCategory switched to PLAYANDRECORD.")
-//        } catch{print("Could not activate audio session.")}
+        //no need to mess with audio session here. Capturesesion configured it for us.
         captureSession.outputs[0].startRecordingToOutputFileURL(NSURL(fileURLWithPath: "/tmp/\(str)"), recordingDelegate: self)
     }
     func StopButtonPressed(sender: UIButton!) {
         print("STOP button pressed")
-        print("CURRENT ROUTE: \(asset5.currentRoute)")
-        print("BEFORE STOP RECORD CATEGORY: \(asset5.category)")
+        
         captureSession.outputs[0].stopRecording()
-        print("AFTER STOP RECORD CATEGORY: \(asset5.category)")
         captureSession.stopRunning() // what happens here?
-        print("AFTER STOP RUNNING CATEGORY: \(asset5.category)")
+        
         previewLayer?.hidden = true
         buttonStop.hidden = true
         buttonRerecord.hidden = false
@@ -215,65 +212,45 @@ class ConversationsTwoController: UIViewController, AVCaptureFileOutputRecording
         if fileManager.fileExistsAtPath(filePath) {print("FILE \(filePath) EXISTS")} else {print("FILE DNE")}
         let movieURL = NSURL(fileURLWithPath: filePath/*"/tmp/\(videoOutputStrings[videoOutputStrings.count-1])"*/)
         print("INIT AVASSET WITH: \(movieURL)")
-        asset1 = AVAsset(URL: movieURL)
-        print("ASSET1 TRACKS: \(asset1?.tracks)")
-        print("ASSET1 IS PLAYABLE: \(asset1?.playable)")
-        asset2 = AVPlayerItem(asset: asset1!)
-        print("VIDEO DURATION: \(asset2?.duration)")
-//        if(asset2?.status == AVPlayerItemStatus.ReadyToPlay){
-        asset3 = AVPlayer(playerItem: asset2!)
+        let asset3 = AVPlayer(URL: movieURL)
         NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(playerDidFinishPlaying),
-                                                         name: AVPlayerItemDidPlayToEndTimeNotification, object: asset3!.currentItem)
-//        asset3.replaceCurrentItemWithPlayerItem(asset2)
-        asset3!.seekToTime(kCMTimeZero)
-        asset3!.actionAtItemEnd = AVPlayerActionAtItemEnd.Pause
+                                                         name: AVPlayerItemDidPlayToEndTimeNotification, object: asset3.currentItem)
+//        asset3.seekToTime(kCMTimeZero)
+        asset3.actionAtItemEnd = AVPlayerActionAtItemEnd.Pause
         videoPlaybackAsset = AVPlayerLayer(player: asset3)
         videoPlaybackAsset!.frame = CGRectMake(20, 130, 260, 250)
         videoPlaybackAsset!.backgroundColor = UIColor.orangeColor().CGColor
         videoPlaybackAsset?.videoGravity = AVLayerVideoGravityResizeAspect
         self.view.layer.addSublayer(videoPlaybackAsset!)
-        print("AFTER PLAYBACK ASSETS CREATED CATEGORY: \(asset5.category)")
-//                if(videoPlaybackAsset?.readyForDisplay == true){
-//        do{
-//            try asset5.setCategory(AVAudioSessionCategoryPlayAndRecord)
-////            try asset5.setActive(true)
-//            print("AVAudioSessionCategory switched to PLAYANDRECORD.")
-//        } catch{print("Could not activate audio session for playback.")}
-        print("CURRENT ROUTE: \(asset5.currentRoute)")
     }
     func PlaybackButtonPressed(sender: UIButton!) {
         print("Playback button Pressed! :)")
-        print("CURRENT ROUTE: \(asset5.currentRoute)")
-        asset3!.seekToTime(kCMTimeZero)
-        asset3!.play()
+        var success = false
+        var iteration = 1
+        while(!success && iteration < 500){
+            do{
+                try AVAudioSession.sharedInstance().setActive(true)
+                print("--Audio Session successfully created for recorded video playback")
+                success = true
+            } catch{
+                print("**ERROR\(iteration): Could not activate audio session for recorded video playback.")
+                iteration = iteration + 1
+                sleep(1)
+            }
+        }
+        videoPlaybackAsset?.player!.seekToTime(kCMTimeZero)
+        videoPlaybackAsset?.player!.play()
     }
     func SubmitButtonPressed(sender: UIButton!) {
         print("Submit button Pressed! :)")
-        asset3 = nil
-//        do{
-//            try asset5.setActive(false)
-//        } catch{print("Could not deactivate audio session for finished video playback audio session.")}
-        sendVideoDataViaFTP("TylerStone",password: "",ip: "192.168.1.110",fileName: videoOutputStrings[videoOutputStrings.count-1])
+        EndVideoPlaybackSession()
+        sendVideoDataViaFTP("",password: "",ip: "",fileName: videoOutputStrings[videoOutputStrings.count-1])
         let vc = self.storyboard?.instantiateViewControllerWithIdentifier("ConversationsOneController")
         self.presentViewController(vc! as UIViewController, animated: true, completion: nil)
     }
     func RerecordButtonPressed(sender: UIButton!){
         print("Rerecord Button Pressed")
-//        var i = 0
-//        var success = false
-//        asset1=nil
-//        asset2=nil
-        stopPlayer()
-//        while !success && i<20{
-//            do{
-//                try asset5.setActive(false)
-//                success = true
-//            } catch{
-//                i=i+1
-//                print("\(i) Could not deactivate audio session for re-record pressed.")
-//                sleep(1)
-//            }
-//        }
+        EndVideoPlaybackSession()
         buttonRerecord.hidden = true
         buttonPlayback.hidden = true
         videoPlaybackAsset?.hidden = true
@@ -283,27 +260,11 @@ class ConversationsTwoController: UIViewController, AVCaptureFileOutputRecording
         captureSession.startRunning() // sound fucks off for some reason...
     }
     
-    func stopPlayer(){
-        if let play = asset3 {
-            print("stopped")
-            play.pause()
-            asset3 = nil
-            print("player deallocated")
-        } else {
-            print("player was already deallocated")
-        }
-    }
-    
     //Delegate methods
     func captureOutput(captureOutput: AVCaptureFileOutput!,
                          didFinishRecordingToOutputFileAtURL outputFileURL: NSURL!,
                                                              fromConnections connections: [AnyObject]!,
                                                                              error: NSError!){
-//        do{
-//            try asset5.setActive(false)
-//            print("Successfully turned off Audio Session.")
-//        } catch{print("Could not deactivate audio session for recording video.")}
-        print("AT OUTPUT CAPTURED CATEGORY: \(asset5.category)")
         if(error == nil){
         print("Finished Recording. File successfully created. Link should be /tmp/\(videoOutputStrings[videoOutputStrings.count-1]), is actually \(outputFileURL)")
             print("USED CONNECTIONS: \(connections)")
@@ -314,9 +275,28 @@ class ConversationsTwoController: UIViewController, AVCaptureFileOutputRecording
     
     func playerDidFinishPlaying(note: NSNotification){
         print("Item Finished Playing.")
-//        do{
-//            try asset5.setActive(false)
-//        } catch{print("Could not deactivate audio session for finished video playback audio session.")}
+    }
+    
+    func EndVideoPlaybackSession(){
+        print("deallocating video playback items and turning off associated audio session")
+        videoPlaybackAsset?.player?.pause()
+        videoPlaybackAsset?.player = nil
+        videoPlaybackAsset?.removeFromSuperlayer()
+        videoPlaybackAsset = nil
+        var success = false
+        var iteration = 1
+        while(!success && iteration < 500){
+            do{
+                try AVAudioSession.sharedInstance().setActive(false)
+                print("--Audio Session successfully destroyed for recorded video playback")
+                success = true
+            } catch{
+                print("**ERROR\(iteration): Could not destroy audio session for recorded video playback.")
+                iteration = iteration + 1
+                sleep(1)
+            }
+        }
+
     }
     
 ////////////////////////////////////////////////////////////////

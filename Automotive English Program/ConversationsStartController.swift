@@ -44,7 +44,7 @@ class ConversationsStartController: UIViewController, AVAudioPlayerDelegate{
     func initAudio(){
         var v1 = true
         var v2 = true
-        let URL1 = NSBundle.mainBundle().pathForResource(/*globalUtility.getConversationAudioLink()*/"TestAudioSeseragi", ofType: "mp3")
+        let URL1 = NSBundle.mainBundle().pathForResource(/*globalUtility.getConversationAudioLink()*/"TestAudioHaru", ofType: "mp3")
         let movieURL = NSURL(fileURLWithPath: URL1!)
         do{
             try asset4 = AVAudioPlayer(contentsOfURL: movieURL)
@@ -62,10 +62,10 @@ class ConversationsStartController: UIViewController, AVAudioPlayerDelegate{
     
     //delegate methods
     func audioPlayerDidFinishPlaying(player: AVAudioPlayer, successfully flag: Bool) {
-//        do{
-//            try asset5.setActive(false)
-//            print("----Audio Session Successfully Destroyed")
-//        } catch{print("****Could not activate audio session.")}
+        do{
+            try asset5.setActive(false)
+            print("----Audio Session Successfully Destroyed")
+        } catch{print("****Could not activate audio session.")}
         if flag {
             print("----successfully finished playing")
         } else {

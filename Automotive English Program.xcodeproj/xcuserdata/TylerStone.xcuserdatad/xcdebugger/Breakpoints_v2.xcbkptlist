@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Automotive English Program/ConversationsTwoController.swift"
-            timestampString = "488511109.557221"
+            timestampString = "488656785.941399"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "107"
-            endingLineNumber = "107"
+            startingLineNumber = "103"
+            endingLineNumber = "103"
             landmarkName = "configureDevice()"
             landmarkType = "5">
          </BreakpointContent>
