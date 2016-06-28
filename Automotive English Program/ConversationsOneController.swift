@@ -29,8 +29,8 @@ class ConversationsOneController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         print("Conversations Page 1 loaded.")
-        var sentence = ""
         if(globalUtility.getConversationsLength() != 0){
+            var sentence = ""
             sentence = globalUtility.getAndRemoveHeadConversationSentence()
             SentenceLabel.text = sentence
             initVideos()
@@ -49,10 +49,8 @@ class ConversationsOneController: UIViewController{
         videoPlaybackAsset?.player?.play()
         if(redirectToHome){
             print("--Length of conversations is now 0, Exiting back to home.")
-            do{
-                try AVAudioSession.sharedInstance().setActive(false)
-                print("----Audio Session successfully destroyed.")
-            } catch{print("****ERROR: Could not deactivate audio session.")}
+            requestAudioSession(false)
+            mergeVideos()
             let vc = self.storyboard?.instantiateViewControllerWithIdentifier("HomePageNavigationController")
             self.presentViewController(vc! as UIViewController, animated: true, completion: nil)
         }
@@ -101,4 +99,51 @@ class ConversationsOneController: UIViewController{
             }
         }
     }
+    
+    func mergeVideos(){
+        let composition = AVMutableComposition()
+        let trackVideo:AVMutableCompositionTrack = composition.addMutableTrackWithMediaType(AVMediaTypeVideo, preferredTrackID: CMPersistentTrackID())
+        let trackAudio:AVMutableCompositionTrack = composition.addMutableTrackWithMediaType(AVMediaTypeAudio, preferredTrackID: CMPersistentTrackID())
+        var insertTime = kCMTimeZero
+        repeat{
+            let moviePath = globalUtility.getAndRemoveHeadOutputVideos()
+            let moviePathUrl = NSURL(fileURLWithPath: moviePath)
+            let sourceAsset = AVURLAsset(URL: moviePathUrl, options: nil)
+            
+            let tracks = sourceAsset.tracksWithMediaType(AVMediaTypeVideo)
+            let audios = sourceAsset.tracksWithMediaType(AVMediaTypeAudio)
+            
+            if tracks.count > 0{
+                let assetTrack:AVAssetTrack = tracks[0] as AVAssetTrack
+                do{
+                try trackVideo.insertTimeRange(CMTimeRangeMake(kCMTimeZero,sourceAsset.duration), ofTrack: assetTrack, atTime: insertTime)
+                }catch{print("ERROR: Failed to insert time range when Merging Videos (video)!")}
+                let assetTrackAudio:AVAssetTrack = audios[0] as AVAssetTrack
+                do{
+                try trackAudio.insertTimeRange(CMTimeRangeMake(kCMTimeZero,sourceAsset.duration), ofTrack: assetTrackAudio, atTime: insertTime)
+                }catch{print("ERROR: Failed to insert time range when Merging Videos (audio)!")}
+                insertTime = CMTimeAdd(insertTime, sourceAsset.duration)
+            }
+        }while(globalUtility.getOutputVideosLength() > 0)
+        
+        let completeMovie = NSTemporaryDirectory().stringByAppendingString("MERGED\(Int(NSDate().timeIntervalSince1970)).mp4")
+        let completeMovieUrl = NSURL(fileURLWithPath: completeMovie)
+        let exporter = AVAssetExportSession(asset: composition, presetName: AVAssetExportPresetHighestQuality)
+        exporter!.outputURL = completeMovieUrl
+        exporter!.outputFileType = AVFileTypeMPEG4 //AVFileTypeQuickTimeMovie
+        exporter!.exportAsynchronouslyWithCompletionHandler({
+            switch exporter!.status{
+            case  AVAssetExportSessionStatus.Failed:
+                print("failed \(exporter!.error)")
+            case AVAssetExportSessionStatus.Cancelled:
+                print("cancelled \(exporter!.error)")
+            default:
+                print("complete")
+            }
+        })
+        print("FILE SUCCESSFULLY COMPLETED AT \(completeMovie). View in Unit 3.")
+        globalUtility.addConversationVideos([completeMovie])
+    }
+    
+    
 }
