@@ -36,9 +36,9 @@ class ConversationsOneController: UIViewController{
             initVideos()
             do{
                 try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
-                try AVAudioSession.sharedInstance().setActive(true)
-                print("--Audio Session successfully created.")
-            } catch{print("**ERROR: Could not activate audio session.")}
+                print("--Audio Session set to playback.")
+            } catch{print("**ERROR: Could not set audio session to playback.")}
+            requestAudioSession(true)
         } else {
             redirectToHome = true
         }
@@ -59,8 +59,8 @@ class ConversationsOneController: UIViewController{
     }
     
     func initVideos(){
-        let URL1 = NSBundle.mainBundle().pathForResource(/*globalUtility.getConversationAudioLink()*/"TestVideo1", ofType: "mp4")
-        let movieURL = NSURL(fileURLWithPath: URL1!)
+        let URL1 = globalUtility.getAndRemoveHeadConversationVideos()
+        let movieURL = NSURL(fileURLWithPath: URL1)
         let asset3 = AVPlayer(URL: movieURL)
         NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(playerDidFinishPlaying),
                                                          name: AVPlayerItemDidPlayToEndTimeNotification, object: asset3.currentItem)
@@ -80,12 +80,19 @@ class ConversationsOneController: UIViewController{
         videoPlaybackAsset = nil
 
         print("playback layer removed and nilled")
+        requestAudioSession(false)
+        print("--Finished Playing video, going to camera")
+        let vc = self.storyboard?.instantiateViewControllerWithIdentifier("ConversationsTwoController")
+        self.presentViewController(vc! as UIViewController, animated: true, completion: nil)
+    }
+    
+    func requestAudioSession(setting:Bool){
         var success = false
         var iteration = 1
         while(!success && iteration < 500){
             do{
-                try AVAudioSession.sharedInstance().setActive(false)
-                print("--Audio Session successfully destroyed.")
+                try AVAudioSession.sharedInstance().setActive(setting)
+                print("--Audio Session successfully turned \(setting).")
                 success = true
             } catch{
                 print("**ERROR\(iteration): Could not deactivate audio session.")
@@ -93,8 +100,5 @@ class ConversationsOneController: UIViewController{
                 sleep(1)
             }
         }
-        print("--Finished Playing video, going to camera")
-        let vc = self.storyboard?.instantiateViewControllerWithIdentifier("ConversationsTwoController")
-        self.presentViewController(vc! as UIViewController, animated: true, completion: nil)
     }
 }

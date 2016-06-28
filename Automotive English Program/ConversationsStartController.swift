@@ -28,14 +28,10 @@ class ConversationsStartController: UIViewController, AVAudioPlayerDelegate{
     @IBAction func PlayConversationAudioButtonPressed(sender: AnyObject) {
         print("--Play Button Pressed")
         if(!(asset4?.playing)!){
-            do{
-                try asset5.setActive(true)
-                print("----Audio Session Successfully created")
-            } catch{print("****Could not activate audio session.")}
-
-            print("----Audio playing")
+            requestAudioSession(true)
             asset4?.prepareToPlay()
             asset4?.play()
+            print("----Audio playing")
         } else {
             print("----Audio is currently playing. Doing nothing")
         }
@@ -44,8 +40,8 @@ class ConversationsStartController: UIViewController, AVAudioPlayerDelegate{
     func initAudio(){
         var v1 = true
         var v2 = true
-        let URL1 = NSBundle.mainBundle().pathForResource(/*globalUtility.getConversationAudioLink()*/"TestAudioHaru", ofType: "mp3")
-        let movieURL = NSURL(fileURLWithPath: URL1!)
+        let URL1 = globalUtility.getConversationAudioLink()
+        let movieURL = NSURL(fileURLWithPath: URL1)
         do{
             try asset4 = AVAudioPlayer(contentsOfURL: movieURL)
             asset4?.delegate = self
@@ -62,14 +58,27 @@ class ConversationsStartController: UIViewController, AVAudioPlayerDelegate{
     
     //delegate methods
     func audioPlayerDidFinishPlaying(player: AVAudioPlayer, successfully flag: Bool) {
-        do{
-            try asset5.setActive(false)
-            print("----Audio Session Successfully Destroyed")
-        } catch{print("****Could not activate audio session.")}
+        requestAudioSession(false)
         if flag {
             print("----successfully finished playing")
         } else {
             print("****ERROR: Failed to finish playing successfully")
+        }
+    }
+    
+    func requestAudioSession(setting:Bool){
+        var success = false
+        var iteration = 1
+        while(!success && iteration < 500){
+            do{
+                try AVAudioSession.sharedInstance().setActive(setting)
+                print("--Audio Session successfully turned \(setting).")
+                success = true
+            } catch{
+                print("**ERROR\(iteration): Could not deactivate audio session.")
+                iteration = iteration + 1
+                sleep(1)
+            }
         }
     }
 }

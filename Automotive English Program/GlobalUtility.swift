@@ -21,6 +21,7 @@ class GlobalUtility {
     var conversationAudioLink:String = ""
     var conversation = [String]()
     var conversationVideos = [String]()
+    var outputVideos = [String]()
     
     //Methods
     ////Language Settings
@@ -55,7 +56,7 @@ class GlobalUtility {
         }
     }
     func getAndRemoveHeadConversationSentence() -> String{
-        let sentence = conversation.removeAtIndex(0)
+        let sentence = conversation.removeFirst()
         return sentence
     }
     func getConversationsLength() -> Int{return conversation.count}
@@ -67,9 +68,19 @@ class GlobalUtility {
         }
     }
     func getAndRemoveHeadConversationVideos() -> String{
-        let sentence = conversationVideos.removeAtIndex(0)
+        let sentence = conversationVideos.removeFirst()
+        outputVideos.append(sentence)
         return sentence
     }
     func getConversationVideosLength() -> Int{return conversationVideos.count}
+    func addOutputVideo(video:String){outputVideos.append(video)}
+    func removeLastOutputVideo(){outputVideos.removeLast()}
+    func getLastOutputVideo()->String{return outputVideos[outputVideos.count-1]}
+    func getAndRemoveHeadOutputVideos() -> String{
+        let sentence = outputVideos.removeFirst()
+        return sentence
+    }
+    func getOutputVideosLength() -> Int{return outputVideos.count}
+    
 }
 let globalUtility = GlobalUtility()

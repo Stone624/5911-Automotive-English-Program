@@ -16,6 +16,7 @@
 //  programatically skipping
 
 // FIXED(sort of): AVAudioSession use.
+// FIXED: Minimise global reference for proper deallocation.
 
 import UIKit
 import AVKit
@@ -38,13 +39,13 @@ class ConversationsTwoController: UIViewController, AVCaptureFileOutputRecording
     var previewLayer : AVCaptureVideoPreviewLayer?
     var captureDeviceVideo : AVCaptureDevice?
     var captureDeviceAudio : AVCaptureDevice?
-    var videoOutputStrings : [String] = [] // Should be Global Utility
     var videoPlaybackAsset : AVPlayerLayer?
     
     //Function to redirect when completed.
     override func viewDidAppear(animated: Bool) {
         if(redirectToHome){
-            print("Length of conversations is now 0, Exiting back to home.")
+            print("Length of conversations is now 0 Merging and expoerting videos then Exiting back to home.")
+//            mergeVideos()
             let vc = self.storyboard?.instantiateViewControllerWithIdentifier("HomePageNavigationController")
             self.presentViewController(vc! as UIViewController, animated: true, completion: nil)
         }
@@ -54,23 +55,24 @@ class ConversationsTwoController: UIViewController, AVCaptureFileOutputRecording
     override func viewDidLoad() {
         super.viewDidLoad()
         // Set sentence overlay
-        var sentence = ""
         if(globalUtility.getConversationsLength() != 0){
+            var sentence = ""
             sentence = globalUtility.getAndRemoveHeadConversationSentence()
             SentenceLabel.text = sentence
+            // Create capture session and find camera
+            captureSession.sessionPreset = AVCaptureSessionPresetHigh
+            captureSession.usesApplicationAudioSession = true
+            captureSession.automaticallyConfiguresApplicationAudioSession = true
+            getVideoInputs()
+            if(captureDeviceAudio != nil && captureDeviceVideo != nil){
+                do{
+                    try beginSession()
+                } catch {print("Caught an exception in beginSession().")}
+            } else {
+                print("ERROR: Could not find both front camera and microphone.")
+                redirectToHome = true
+            }
         } else {redirectToHome = true}
-        // Create capture session and find camera
-        captureSession.sessionPreset = AVCaptureSessionPresetHigh
-        captureSession.usesApplicationAudioSession = true
-        captureSession.automaticallyConfiguresApplicationAudioSession = true
-        getVideoInputs()
-        if(captureDeviceAudio != nil && captureDeviceVideo != nil){
-            do{
-                try beginSession()
-            } catch {print("Caught an exception in beginSession().")}
-        } else {
-            print("ERROR: Could not find both front camera and microphone.")
-        }
     }
     
     func getVideoInputs(){
@@ -169,19 +171,7 @@ class ConversationsTwoController: UIViewController, AVCaptureFileOutputRecording
             self.view.addSubview(buttonRerecord)
             //begin capture
             print("Begin Running Capture Session.")
-            var success = false
-            var iteration = 1
-            while(!success && iteration < 500){
-                do{
-                    try AVAudioSession.sharedInstance().setActive(false)
-                    print("--Audio Session successfully destroyed pre-captureSession.")
-                    success = true
-                } catch{
-                    print("**ERROR\(iteration): Could not deactivate audio session.")
-                    iteration = iteration + 1
-                    sleep(1)
-                }
-            }
+            requestAudioSession(false) // turn off any current audio session for capturesession configuration.
             captureSession.startRunning() // configures audio recording here.
         } catch {print("EXPLOSION! (video attempt blew up.")}
     }
@@ -189,17 +179,16 @@ class ConversationsTwoController: UIViewController, AVCaptureFileOutputRecording
         print("Start button Pressed! :)")
         buttonStart.hidden = true
         buttonStop.hidden = false
-        let str = "CCV\(Int(NSDate().timeIntervalSince1970)).mov"
-        videoOutputStrings.append(str)
+        let str = NSTemporaryDirectory().stringByAppendingString("CCV\(Int(NSDate().timeIntervalSince1970)).mp4")//was just str
+        globalUtility.addOutputVideo(str)//videoOutputStrings.append(str)
         print("capture session currently using INPUTS: \(captureSession.inputs)")
         //no need to mess with audio session here. Capturesesion configured it for us.
-        captureSession.outputs[0].startRecordingToOutputFileURL(NSURL(fileURLWithPath: "/tmp/\(str)"), recordingDelegate: self)
+        captureSession.outputs[0].startRecordingToOutputFileURL(NSURL(fileURLWithPath: str), recordingDelegate: self)
     }
     func StopButtonPressed(sender: UIButton!) {
         print("STOP button pressed")
-        
         captureSession.outputs[0].stopRecording()
-        captureSession.stopRunning() // what happens here?
+        captureSession.stopRunning() // audio session auto-deconfigured
         
         previewLayer?.hidden = true
         buttonStop.hidden = true
@@ -207,7 +196,7 @@ class ConversationsTwoController: UIViewController, AVCaptureFileOutputRecording
         buttonPlayback.hidden = false
         buttonSubmit.hidden = false
         
-        let filePath = "/tmp/\(videoOutputStrings[videoOutputStrings.count-1])"
+        let filePath = globalUtility.getLastOutputVideo()//"/tmp/\(videoOutputStrings[videoOutputStrings.count-1])"
         let fileManager = NSFileManager.defaultManager()
         if fileManager.fileExistsAtPath(filePath) {print("FILE \(filePath) EXISTS")} else {print("FILE DNE")}
         let movieURL = NSURL(fileURLWithPath: filePath/*"/tmp/\(videoOutputStrings[videoOutputStrings.count-1])"*/)
@@ -225,39 +214,28 @@ class ConversationsTwoController: UIViewController, AVCaptureFileOutputRecording
     }
     func PlaybackButtonPressed(sender: UIButton!) {
         print("Playback button Pressed! :)")
-        var success = false
-        var iteration = 1
-        while(!success && iteration < 500){
-            do{
-                try AVAudioSession.sharedInstance().setActive(true)
-                print("--Audio Session successfully created for recorded video playback")
-                success = true
-            } catch{
-                print("**ERROR\(iteration): Could not activate audio session for recorded video playback.")
-                iteration = iteration + 1
-                sleep(1)
-            }
-        }
+        requestAudioSession(true)
         videoPlaybackAsset?.player!.seekToTime(kCMTimeZero)
         videoPlaybackAsset?.player!.play()
     }
     func SubmitButtonPressed(sender: UIButton!) {
         print("Submit button Pressed! :)")
         EndVideoPlaybackSession()
-        sendVideoDataViaFTP("",password: "",ip: "",fileName: videoOutputStrings[videoOutputStrings.count-1])
+        sendVideoDataViaFTP("",password: "",ip: "",fileName: globalUtility.getLastOutputVideo()/*videoOutputStrings[videoOutputStrings.count-1]*/)
         let vc = self.storyboard?.instantiateViewControllerWithIdentifier("ConversationsOneController")
         self.presentViewController(vc! as UIViewController, animated: true, completion: nil)
     }
     func RerecordButtonPressed(sender: UIButton!){
         print("Rerecord Button Pressed")
         EndVideoPlaybackSession()
+        globalUtility.removeLastOutputVideo()
         buttonRerecord.hidden = true
         buttonPlayback.hidden = true
         videoPlaybackAsset?.hidden = true
         buttonSubmit.hidden = true
         buttonStart.hidden = false
         previewLayer?.hidden = false
-        captureSession.startRunning() // sound fucks off for some reason...
+        captureSession.startRunning() // sound fucks off for some reason... SOLVED: Due to global reference.
     }
     
     //Delegate methods
@@ -266,7 +244,7 @@ class ConversationsTwoController: UIViewController, AVCaptureFileOutputRecording
                                                              fromConnections connections: [AnyObject]!,
                                                                              error: NSError!){
         if(error == nil){
-        print("Finished Recording. File successfully created. Link should be /tmp/\(videoOutputStrings[videoOutputStrings.count-1]), is actually \(outputFileURL)")
+        print("Finished Recording. File successfully created. Link should be \(globalUtility.getLastOutputVideo()), is actually \(outputFileURL)")
             print("USED CONNECTIONS: \(connections)")
         } else {
             print("File NOT written successfully. Something exploded along the way. ERROR: \(error)")
@@ -283,20 +261,24 @@ class ConversationsTwoController: UIViewController, AVCaptureFileOutputRecording
         videoPlaybackAsset?.player = nil
         videoPlaybackAsset?.removeFromSuperlayer()
         videoPlaybackAsset = nil
+        requestAudioSession(false)
+
+    }
+    
+    func requestAudioSession(setting:Bool){
         var success = false
         var iteration = 1
         while(!success && iteration < 500){
             do{
-                try AVAudioSession.sharedInstance().setActive(false)
-                print("--Audio Session successfully destroyed for recorded video playback")
+                try AVAudioSession.sharedInstance().setActive(setting)
+                print("--Audio Session successfully turned \(setting).")
                 success = true
             } catch{
-                print("**ERROR\(iteration): Could not destroy audio session for recorded video playback.")
+                print("**ERROR\(iteration): Could not deactivate audio session.")
                 iteration = iteration + 1
                 sleep(1)
             }
         }
-
     }
     
 ////////////////////////////////////////////////////////////////
@@ -304,7 +286,7 @@ class ConversationsTwoController: UIViewController, AVCaptureFileOutputRecording
     //FTP Send Data Method
     func sendVideoDataViaFTP(username:String,password:String,ip:String,fileName:String){
         print("DOING AN FTP!!")
-        let videoData = NSData(contentsOfURL: NSURL(fileURLWithPath: "/tmp/\(fileName)"))
+        let videoData = NSData(contentsOfURL: NSURL(fileURLWithPath: fileName))
         print("got video data Length: \(videoData?.length)")
         let ServerLocation = "/Users/TylerStone/FtpFiles/5911\(fileName)"
         let FTPString = NSURL(string: "ftp://\(username):\(password)@\(ip):21/\(ServerLocation)")
