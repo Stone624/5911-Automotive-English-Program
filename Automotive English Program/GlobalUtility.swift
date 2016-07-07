@@ -141,6 +141,9 @@ class GlobalUtility {
             }
         }while(globalUtility.getOutputVideosLength() > 0)
         
+        trackVideo.preferredTransform = CGAffineTransformMake(0, 1.0, 1.0, 0, 0, 0)
+        print("CURRENT TRANSFORM: \(composition.preferredTransform)")
+        
         var completeMovie = NSTemporaryDirectory().stringByAppendingString("MERGED\(Int(NSDate().timeIntervalSince1970)).mp4")
         let completeMovieUrl = NSURL(fileURLWithPath: completeMovie)
         let exporter = AVAssetExportSession(asset: composition, presetName: AVAssetExportPresetHighestQuality)
@@ -164,7 +167,8 @@ class GlobalUtility {
         })
         print("FILE SUCCESSFULLY COMPLETED AT \(completeMovie).")
         globalUtility.addConversationVideos([completeMovie])
-        repeat{print("WAITING FOR COMPLETE...");sleep(1)}while(!complete)
+        var i = 0
+        repeat{print("WAITING FOR EXPORT TO COMPLETE... \(i)");sleep(1);i=i+1;}while(!complete)
         return completeMovie
     }
     

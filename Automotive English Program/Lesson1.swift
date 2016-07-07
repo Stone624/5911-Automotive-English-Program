@@ -52,12 +52,12 @@ class Lesson1: UITableViewController{
                 ,"I'm from [your home town], Japan. Where are you from?",
                 "I'm from Toronto Canada.",
                 "I see."])
-                globalUtility.setConversationAudioLink(NSBundle.mainBundle().pathForResource("TestAudioHaru", ofType: "mp3")!)
-                globalUtility.addConversationVideos([NSBundle.mainBundle().pathForResource("TestVideo1", ofType: "mp4")!,
-                NSBundle.mainBundle().pathForResource("TestVideo2", ofType: "mp4")!,
-                NSBundle.mainBundle().pathForResource("TestVideo1", ofType: "mp4")!,
-                NSBundle.mainBundle().pathForResource("TestVideo2", ofType: "mp4")!,
-                NSBundle.mainBundle().pathForResource("TestVideo1", ofType: "mp4")!])
+                globalUtility.setConversationAudioLink(NSBundle.mainBundle().pathForResource("L1U1Caudio", ofType: "m4a")!)
+                globalUtility.addConversationVideos([NSBundle.mainBundle().pathForResource("L1U1CP1", ofType: "mp4")!,
+                NSBundle.mainBundle().pathForResource("L1U1CP2", ofType: "mp4")!,
+                NSBundle.mainBundle().pathForResource("L1U1CP3", ofType: "mp4")!,
+                NSBundle.mainBundle().pathForResource("L1U1CP4", ofType: "mp4")!,
+                NSBundle.mainBundle().pathForResource("L1U1CP5", ofType: "mp4")!])
             //Unit 2
             case 1:
                 print("Set unit and global things for Lesson 1 Unit 2")
