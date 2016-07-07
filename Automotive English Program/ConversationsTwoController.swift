@@ -45,7 +45,8 @@ class ConversationsTwoController: UIViewController, AVCaptureFileOutputRecording
     override func viewDidAppear(animated: Bool) {
         if(redirectToHome){
             print("Length of conversations is now 0 Merging and expoerting videos then Exiting back to home.")
-//            mergeVideos()
+            globalUtility.requestAudioSession(false)
+            globalUtility.mergeAndSend()
             let vc = self.storyboard?.instantiateViewControllerWithIdentifier("HomePageNavigationController")
             self.presentViewController(vc! as UIViewController, animated: true, completion: nil)
         }
@@ -221,7 +222,6 @@ class ConversationsTwoController: UIViewController, AVCaptureFileOutputRecording
     func SubmitButtonPressed(sender: UIButton!) {
         print("Submit button Pressed! :)")
         EndVideoPlaybackSession()
-        globalUtility.sendVideoDataViaFTP("",password: "",ip: "",fileName: globalUtility.getLastOutputVideo()/*videoOutputStrings[videoOutputStrings.count-1]*/)
         let vc = self.storyboard?.instantiateViewControllerWithIdentifier("ConversationsOneController")
         self.presentViewController(vc! as UIViewController, animated: true, completion: nil)
     }
