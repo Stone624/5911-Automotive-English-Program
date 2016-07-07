@@ -38,7 +38,7 @@ class ConversationsOneController: UIViewController{
                 try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
                 print("--Audio Session set to playback.")
             } catch{print("**ERROR: Could not set audio session to playback.")}
-            requestAudioSession(true)
+            globalUtility.requestAudioSession(true)
         } else {
             redirectToHome = true
         }
@@ -49,8 +49,8 @@ class ConversationsOneController: UIViewController{
         videoPlaybackAsset?.player?.play()
         if(redirectToHome){
             print("--Length of conversations is now 0, Exiting back to home.")
-            requestAudioSession(false)
-            mergeVideos()
+            globalUtility.requestAudioSession(false)
+            globalUtility.mergeAndSend()
             let vc = self.storyboard?.instantiateViewControllerWithIdentifier("HomePageNavigationController")
             self.presentViewController(vc! as UIViewController, animated: true, completion: nil)
         }
@@ -78,71 +78,10 @@ class ConversationsOneController: UIViewController{
         videoPlaybackAsset = nil
 
         print("playback layer removed and nilled")
-        requestAudioSession(false)
+        globalUtility.requestAudioSession(false)
         print("--Finished Playing video, going to camera")
         let vc = self.storyboard?.instantiateViewControllerWithIdentifier("ConversationsTwoController")
         self.presentViewController(vc! as UIViewController, animated: true, completion: nil)
-    }
-    
-    func requestAudioSession(setting:Bool){
-        var success = false
-        var iteration = 1
-        while(!success && iteration < 500){
-            do{
-                try AVAudioSession.sharedInstance().setActive(setting)
-                print("--Audio Session successfully turned \(setting).")
-                success = true
-            } catch{
-                print("**ERROR\(iteration): Could not deactivate audio session.")
-                iteration = iteration + 1
-                sleep(1)
-            }
-        }
-    }
-    
-    func mergeVideos(){
-        let composition = AVMutableComposition()
-        let trackVideo:AVMutableCompositionTrack = composition.addMutableTrackWithMediaType(AVMediaTypeVideo, preferredTrackID: CMPersistentTrackID())
-        let trackAudio:AVMutableCompositionTrack = composition.addMutableTrackWithMediaType(AVMediaTypeAudio, preferredTrackID: CMPersistentTrackID())
-        var insertTime = kCMTimeZero
-        repeat{
-            let moviePath = globalUtility.getAndRemoveHeadOutputVideos()
-            let moviePathUrl = NSURL(fileURLWithPath: moviePath)
-            let sourceAsset = AVURLAsset(URL: moviePathUrl, options: nil)
-            
-            let tracks = sourceAsset.tracksWithMediaType(AVMediaTypeVideo)
-            let audios = sourceAsset.tracksWithMediaType(AVMediaTypeAudio)
-            
-            if tracks.count > 0{
-                let assetTrack:AVAssetTrack = tracks[0] as AVAssetTrack
-                do{
-                try trackVideo.insertTimeRange(CMTimeRangeMake(kCMTimeZero,sourceAsset.duration), ofTrack: assetTrack, atTime: insertTime)
-                }catch{print("ERROR: Failed to insert time range when Merging Videos (video)!")}
-                let assetTrackAudio:AVAssetTrack = audios[0] as AVAssetTrack
-                do{
-                try trackAudio.insertTimeRange(CMTimeRangeMake(kCMTimeZero,sourceAsset.duration), ofTrack: assetTrackAudio, atTime: insertTime)
-                }catch{print("ERROR: Failed to insert time range when Merging Videos (audio)!")}
-                insertTime = CMTimeAdd(insertTime, sourceAsset.duration)
-            }
-        }while(globalUtility.getOutputVideosLength() > 0)
-        
-        let completeMovie = NSTemporaryDirectory().stringByAppendingString("MERGED\(Int(NSDate().timeIntervalSince1970)).mp4")
-        let completeMovieUrl = NSURL(fileURLWithPath: completeMovie)
-        let exporter = AVAssetExportSession(asset: composition, presetName: AVAssetExportPresetHighestQuality)
-        exporter!.outputURL = completeMovieUrl
-        exporter!.outputFileType = AVFileTypeMPEG4 //AVFileTypeQuickTimeMovie
-        exporter!.exportAsynchronouslyWithCompletionHandler({
-            switch exporter!.status{
-            case  AVAssetExportSessionStatus.Failed:
-                print("failed \(exporter!.error)")
-            case AVAssetExportSessionStatus.Cancelled:
-                print("cancelled \(exporter!.error)")
-            default:
-                print("complete")
-            }
-        })
-        print("FILE SUCCESSFULLY COMPLETED AT \(completeMovie). View in Unit 3.")
-        globalUtility.addConversationVideos([completeMovie])
     }
     
     

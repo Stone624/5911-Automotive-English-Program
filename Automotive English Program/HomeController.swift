@@ -19,7 +19,6 @@ class HomeController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //?
         print("Home Page loaded.")
     }
     override func viewWillAppear(animated: Bool) {
