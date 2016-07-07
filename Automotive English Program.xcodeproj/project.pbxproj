@@ -31,6 +31,8 @@
 		32DB89281D2D93C80033C057 /* OsuHondaAEPLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 32DB89271D2D93C80033C057 /* OsuHondaAEPLogo.png */; };
 		32DEB5751CEF50D100FF30B1 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32DEB5741CEF50D100FF30B1 /* MobileCoreServices.framework */; };
 		32F13F921CF66B0600236609 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32F13F911CF66B0600236609 /* HomeController.swift */; };
+		D419300E9956F12CE11971B0 /* Pods_Automotive_English_Program.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49F31D656B01BA1C00CEDB3C /* Pods_Automotive_English_Program.framework */; };
+		F72755581D2ED62E00A3657B /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72755571D2ED62E00A3657B /* Video.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +83,10 @@
 		32DB89271D2D93C80033C057 /* OsuHondaAEPLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = OsuHondaAEPLogo.png; sourceTree = "<group>"; };
 		32DEB5741CEF50D100FF30B1 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		32F13F911CF66B0600236609 /* HomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
+		49F31D656B01BA1C00CEDB3C /* Pods_Automotive_English_Program.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Automotive_English_Program.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AF2CB2121489A3209FC85822 /* Pods-Automotive English Program.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Automotive English Program.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Automotive English Program/Pods-Automotive English Program.debug.xcconfig"; sourceTree = "<group>"; };
+		CB9344D9A529C3BDF6647219 /* Pods-Automotive English Program.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Automotive English Program.release.xcconfig"; path = "Pods/Target Support Files/Pods-Automotive English Program/Pods-Automotive English Program.release.xcconfig"; sourceTree = "<group>"; };
+		F72755571D2ED62E00A3657B /* Video.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +95,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				32DEB5751CEF50D100FF30B1 /* MobileCoreServices.framework in Frameworks */,
+				D419300E9956F12CE11971B0 /* Pods_Automotive_English_Program.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,6 +124,8 @@
 				32A36B251CED5ACB001CE145 /* Automotive English ProgramTests */,
 				32A36B301CED5ACB001CE145 /* Automotive English ProgramUITests */,
 				32A36B0F1CED5ACB001CE145 /* Products */,
+				4A67B742F3CFBC831F75E210 /* Pods */,
+				40AA76049A6AB3848AEF392D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -155,6 +164,7 @@
 				320B46241D09130900C0BD95 /* ConversationsOneController.swift */,
 				32A36B131CED5ACB001CE145 /* ConversationsTwoController.swift */,
 				3249960B1D149CC300FF75D2 /* Lesson1.swift */,
+				F72755571D2ED62E00A3657B /* Video.swift */,
 			);
 			path = "Automotive English Program";
 			sourceTree = "<group>";
@@ -177,6 +187,23 @@
 			path = "Automotive English ProgramUITests";
 			sourceTree = "<group>";
 		};
+		40AA76049A6AB3848AEF392D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				49F31D656B01BA1C00CEDB3C /* Pods_Automotive_English_Program.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4A67B742F3CFBC831F75E210 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				AF2CB2121489A3209FC85822 /* Pods-Automotive English Program.debug.xcconfig */,
+				CB9344D9A529C3BDF6647219 /* Pods-Automotive English Program.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -184,9 +211,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 32A36B361CED5ACB001CE145 /* Build configuration list for PBXNativeTarget "Automotive English Program" */;
 			buildPhases = (
+				15942F2A81C8DF6C1191A1AE /* [CP] Check Pods Manifest.lock */,
 				32A36B0A1CED5ACB001CE145 /* Sources */,
 				32A36B0B1CED5ACB001CE145 /* Frameworks */,
 				32A36B0C1CED5ACB001CE145 /* Resources */,
+				75EBCEF4E3B78CACE5F81B94 /* [CP] Embed Pods Frameworks */,
+				FB85C2532336113DF2D224D9 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -311,12 +341,61 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		15942F2A81C8DF6C1191A1AE /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		75EBCEF4E3B78CACE5F81B94 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Automotive English Program/Pods-Automotive English Program-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FB85C2532336113DF2D224D9 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Automotive English Program/Pods-Automotive English Program-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		32A36B0A1CED5ACB001CE145 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				3284464D1D05F1E0004CEE4E /* ProfileController.swift in Sources */,
+				F72755581D2ED62E00A3657B /* Video.swift in Sources */,
 				320B46231D09127600C0BD95 /* ConversationsStartController.swift in Sources */,
 				320B46211D0911BC00C0BD95 /* Unit.swift in Sources */,
 				32F13F921CF66B0600236609 /* HomeController.swift in Sources */,
@@ -468,12 +547,13 @@
 		};
 		32A36B371CED5ACB001CE145 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AF2CB2121489A3209FC85822 /* Pods-Automotive English Program.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Automotive English Program/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "HondaOSU.Automotive-English-Program";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -483,12 +563,13 @@
 		};
 		32A36B381CED5ACB001CE145 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CB9344D9A529C3BDF6647219 /* Pods-Automotive English Program.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Automotive English Program/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "HondaOSU.Automotive-English-Program";
 				PRODUCT_NAME = "$(TARGET_NAME)";

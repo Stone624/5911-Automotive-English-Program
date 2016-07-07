@@ -1,0 +1,6 @@
+framework module Pods_Automotive_English_Program {
+  umbrella header "Pods-Automotive English Program-umbrella.h"
+
+  export *
+  module * { export * }
+}
