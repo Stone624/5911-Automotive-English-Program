@@ -9,50 +9,66 @@
 // Model class to manage any video manipulation and sending/retrieving from AWS S3.
 
 import Foundation
+import AWSS3
 
 class Video {
     
-    var URL: String
+    var URL: NSURL
     var name : String
     
+    
     init (videoURL: String, videoName: String){
-        self.URL = videoURL
+        self.URL = NSBundle.mainBundle().URLForResource("TestVideo1", withExtension: "mp4")!
         self.name = videoName
     }
     
-    func sendVideoToS3(){
-        /*
-        AWSS3TransferManagerUploadRequest *uploadRequest = [AWSS3TransferManagerUploadRequest new]
-        uploadRequest.bucket = "osuhondaaep"
-        uploadRequest.key = self.name
-        uploadRequest.body = testFileURL
+    // function will send this video to S3 bucket
+    func uploadVideo(){
+        // setup variables for s3 upload request
+        let s3bucket = "osuhondaaep"
+        let fileType = "mp4"
+        let cognitoPoolID = ""
+        let region = AWSRegionType.APNortheast1
+        let credentialsProvider = AWSCognitoCredentialsProvider(regionType: region, identityPoolId: cognitoPoolID)
+        let configuration = AWSServiceConfiguration(region: region, credentialsProvider: credentialsProvider)
+        AWSServiceManager.defaultServiceManager().defaultServiceConfiguration = configuration
         
-        [[transferManager, upload:uploadRequest] continueWithExecutor,:[AWSExecutor mainThreadExecutor]
-            withBlock:^id(AWSTask *task) {
-            if (task.error) {
-                if ([task.error.domain isEqualToString:AWSS3TransferManagerErrorDomain]) {
-                    switch (task.error.code) {
-                    case AWSS3TransferManagerErrorCancelled:
-                    case AWSS3TransferManagerErrorPaused:
-                    break;
-                    
-                    default:
-                    NSLog(@"Error: %@", task.error);
-                    break;
-                    }
-                    } else {
-                    // Unknown error.
-                    NSLog(@"Error: %@", task.error);
-                    }
-                    }
-                    
-                    if (task.result) {
-                    AWSS3TransferManagerUploadOutput *uploadOutput = task.result;
-                    // The file uploaded successfully.
-                }
-            return nil;
-        }];
- */
+        //prepare upload request
+        let uploadRequest = AWSS3TransferManagerUploadRequest()
+        uploadRequest.body = self.URL
+        uploadRequest.key = "TestVideo1." + fileType
+        uploadRequest.bucket = s3bucket
+        uploadRequest.contentType = "video/" + fileType
+        
+        // use request to send video to server
+        let transferManager = AWSS3TransferManager.defaultS3TransferManager()
+        transferManager.upload(uploadRequest).continueWithBlock{ (task) -> AnyObject! in
+            if let error = task.error{
+                print("Upload failed (\(error)")
+            }
+            if let exception = task.exception{
+                print("Upload failed (\(exception)")
+            }
+            if task.result != nil {
+                let s3URL = NSURL(string: "http://s3.amazonaws.com/\(s3bucket)/\(uploadRequest.key!)")!
+                print("Uploaded to: \n\(s3URL)")
+            } else {
+                print("Unexpected empty result.")
+            }
+            
+            return nil
+        }
+
+        
+
+       
+            
+        
+    }
+    
+    // function will download a video from the S3 bucket
+    func downloadVideo(){
+        
     }
     
     
