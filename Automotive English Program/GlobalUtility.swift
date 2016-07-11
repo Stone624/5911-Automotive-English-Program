@@ -111,7 +111,11 @@ class GlobalUtility {
         let completeMovie = mergeVideos()
         print("Waiting for merge to be completed...")
         //        return sendVideoDataViaFTP("TylerStone", password: "", ip: "192.168.1.102", fileName: completeMovie)
-        globalUtility.addConversationVideos([completeMovie])
+//        globalUtility.addConversationVideos([completeMovie])
+        sleep(5)
+        print("Finished merged movie at: \(completeMovie)")
+        let testVideo:Video = Video(videoURL: completeMovie,videoName: completeMovie)
+        testVideo.uploadVideo()
     }
     
     //Merge videos

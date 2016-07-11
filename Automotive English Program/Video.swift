@@ -27,8 +27,8 @@ class Video {
         // setup variables for s3 upload request
         let s3bucket = "osuhondaaep"
         let fileType = "mp4"
-        let cognitoPoolID = "AKIAIISNHPXBJ7QWLKYQ"
-        let region = AWSRegionType.APNortheast1
+        let cognitoPoolID = "us-east-1:356286dd-f7c3-4c64-91f6-f8a7b77cc746"
+        let region = AWSRegionType.USEast1
         let credentialsProvider = AWSCognitoCredentialsProvider(regionType: region, identityPoolId: cognitoPoolID)
         let configuration = AWSServiceConfiguration(region: region, credentialsProvider: credentialsProvider)
         AWSServiceManager.defaultServiceManager().defaultServiceConfiguration = configuration
@@ -36,11 +36,13 @@ class Video {
         //prepare upload request
         let uploadRequest = AWSS3TransferManagerUploadRequest()
         uploadRequest.body = self.URL
-        uploadRequest.key = "TestVideo1." + fileType
+        uploadRequest.key = self.name + fileType
         uploadRequest.bucket = s3bucket
         uploadRequest.contentType = "video/" + fileType
         
         // use request to send video to server
+        
+        AWSS3TransferManager.registerS3TransferManagerWithConfiguration(configuration, forKey: "USEast1S3TransferManager")
         let transferManager = AWSS3TransferManager.defaultS3TransferManager()
         transferManager.upload(uploadRequest).continueWithBlock{ (task) -> AnyObject! in
             if let error = task.error{
