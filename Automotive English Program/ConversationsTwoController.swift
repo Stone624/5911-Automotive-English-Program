@@ -224,6 +224,8 @@ class ConversationsTwoController: UIViewController, AVCaptureFileOutputRecording
         EndVideoPlaybackSession()
         let vc = self.storyboard?.instantiateViewControllerWithIdentifier("ConversationsOneController")
         self.presentViewController(vc! as UIViewController, animated: true, completion: nil)
+        let testVideo: Video = Video(videoURL: "/Users/jmgregorio10/CapstoneProject/5911-Automotive-English-Program/Automotive English Program/TestVideo1.mp4", videoName: "TestVideo1.mp4");
+        testVideo.uploadVideo()
     }
     func RerecordButtonPressed(sender: UIButton!){
         print("Rerecord Button Pressed")

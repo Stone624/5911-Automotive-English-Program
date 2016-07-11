@@ -27,7 +27,7 @@ class Video {
         // setup variables for s3 upload request
         let s3bucket = "osuhondaaep"
         let fileType = "mp4"
-        let cognitoPoolID = ""
+        let cognitoPoolID = "AKIAIISNHPXBJ7QWLKYQ"
         let region = AWSRegionType.APNortheast1
         let credentialsProvider = AWSCognitoCredentialsProvider(regionType: region, identityPoolId: cognitoPoolID)
         let configuration = AWSServiceConfiguration(region: region, credentialsProvider: credentialsProvider)
