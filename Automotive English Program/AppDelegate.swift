@@ -19,13 +19,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         print("Creating + Configuring Cognito in appDelegate.")
         let cognitoIdentityPoolId = "us-east-1:356286dd-f7c3-4c64-91f6-f8a7b77cc746"
-        let CognitoRegionType = AWSRegionType.USWest2//.USEast1 // BUCKET LOCATION IS OREGON!!!
+        let CognitoRegionType = AWSRegionType.USEast1 // BUCKET LOCATION IS OREGON!!!
         let credentialProvider = AWSCognitoCredentialsProvider(
             regionType: CognitoRegionType, identityPoolId: cognitoIdentityPoolId)
         
-        
+        let ConfigurationRegionType = AWSRegionType.USWest2
         let configuration = AWSServiceConfiguration(
-            region: CognitoRegionType,//DefaultServiceRegionType,
+            region: ConfigurationRegionType,//DefaultServiceRegionType,
             credentialsProvider: credentialProvider)
         
         AWSServiceManager.defaultServiceManager().defaultServiceConfiguration = configuration
