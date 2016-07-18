@@ -60,12 +60,7 @@ class HomeController: UIViewController{
         //            print("invalid url")
         //        }
         //TESTING VIDEO
-        let videoURL = NSBundle.mainBundle().pathForResource("TestVideo1", ofType: "mp4")!
-        print("LINE 1 with \(videoURL)")
-        let video:Video = Video(videoURL: videoURL, videoName: "TestVideo1")
-        print("LINE 2")
-        video.uploadVideo()
-        print("LINE 3")
+        var video: Video = Video.downloadVideo("TestVideo1.mp4")
     }
     
     
