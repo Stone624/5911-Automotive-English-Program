@@ -71,8 +71,58 @@ class Video {
     }
     
     // function will download a video from the S3 bucket
-    func downloadVideo(){
+    func downloadVideo(downloadName: String) -> Video{
+        print("Download video method called.")
+        // setup variables for s3 upload request
+        let s3bucket = "osuhondaaep"
+        let fileType = "mp4"
+        //next done in AppDelegate
+        //        let cognitoPoolID = "us-east-1:356286dd-f7c3-4c64-91f6-f8a7b77cc746"
+        //        let region = AWSRegionType.USEast1
+        //        let credentialsProvider = AWSCognitoCredentialsProvider(regionType: region, identityPoolId: cognitoPoolID)
+        //        let configuration = AWSServiceConfiguration(region: region, credentialsProvider: credentialsProvider)
+        //        AWSServiceManager.defaultServiceManager().defaultServiceConfiguration = configuration
+        print("variables setup and awsServiceManager configuration set.")
         
+        // prepare download URL
+        let downloadPath: NSString = NSTemporaryDirectory() + downloadName
+        let downloadURL: NSURL = NSURL(fileURLWithPath: downloadPath as String)
+        print("DOWNLOAD URL: \(downloadURL.absoluteString), DOWNLOAD PATH: \(downloadPath as String)")
+        
+        // create a video object to return with a reference to the downloaded file
+        let downloadedVideo: Video = Video(videoURL: downloadURL.absoluteString, videoName: downloadName)
+        
+        //prepare upload request
+        print("preparing upload request...")
+        let downloadRequest = AWSS3TransferManagerDownloadRequest()
+        downloadRequest.bucket = s3bucket
+        downloadRequest.key = self.name + "." + fileType
+        downloadRequest.downloadingFileURL = downloadURL
+        downloadRequest.downloadProgress = { (bytesSent:Int64, totalBytesSent:Int64,  totalBytesExpectedToSend:Int64) -> Void in
+            dispatch_sync(dispatch_get_main_queue(), {() -> Void in
+                print("DOWNLOADED: \(bytesSent)\tTOTAL: \(totalBytesSent)\t/\(totalBytesExpectedToSend)")
+            })
+        }
+        print("download request preparation complete.")
+        AWSS3TransferManager.defaultS3TransferManager().download(downloadRequest).continueWithBlock{ (task) -> AnyObject! in
+            if let error = task.error{
+                print("Download failed (\(error)")
+            }
+            if let exception = task.exception{
+                print("Download failed (\(exception)")
+            }
+            if task.result != nil {
+                let s3URL = NSURL(string: "http://s3.amazonaws.com/\(s3bucket)/\(downloadRequest.key!)")!
+                print("Downloaded to: \n\(s3URL)")
+            } else {
+                print("***AWS S3 UPLOAD FAILED.")
+            }
+            
+            return nil
+        }
+        
+        return downloadedVideo
+
     }
     
     
