@@ -112,8 +112,7 @@ class Video {
                 print("Download failed (\(exception)")
             }
             if task.result != nil {
-                let s3URL = NSURL(string: "http://s3.amazonaws.com/\(s3bucket)/\(downloadRequest.key!)")!
-                print("Downloaded to: \n\(s3URL)")
+                print("Downloaded to: \n\(downloadURL)")
             } else {
                 print("***AWS S3 UPLOAD FAILED.")
             }
