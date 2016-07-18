@@ -71,7 +71,7 @@ class Video {
     }
     
     // function will download a video from the S3 bucket
-    func downloadVideo(downloadName: String) -> Video{
+    class func downloadVideo(downloadName: String) -> Video{
         print("Download video method called.")
         // setup variables for s3 upload request
         let s3bucket = "osuhondaaep"
