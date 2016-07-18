@@ -112,9 +112,9 @@ class Video {
                 print("Download failed (\(exception)")
             }
             if task.result != nil {
-                print("Downloaded to: \n\(downloadURL)")
+               print("Downloaded to: \n\(downloadURL)")
             } else {
-                print("***AWS S3 UPLOAD FAILED.")
+                print("***AWS S3 DOWNLOAD FAILED.")
             }
             
             return nil
