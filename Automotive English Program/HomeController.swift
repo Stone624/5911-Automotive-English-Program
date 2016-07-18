@@ -54,18 +54,18 @@ class HomeController: UIViewController{
 
     @IBAction func BlogButtonPressed(sender: AnyObject) {
         print("Going to blog.")
-        //        if let url = NSURL(string: "http://u.osu.edu/intermediate/") {
-        //            UIApplication.sharedApplication().openURL(url)
-        //        } else {
-        //            print("invalid url")
-        //        }
+        if let url = NSURL(string: "http://u.osu.edu/intermediate/") {
+            UIApplication.sharedApplication().openURL(url)
+        } else {
+            print("invalid url")
+        }
         //TESTING VIDEO
-        let videoURL = NSBundle.mainBundle().pathForResource("TestVideo1", ofType: "mp4")!
-        print("LINE 1 with \(videoURL)")
-        let video:Video = Video(videoURL: videoURL, videoName: "TestVideo1")
-        print("LINE 2")
-        video.uploadVideo()
-        print("LINE 3")
+//        let videoURL = NSBundle.mainBundle().pathForResource("TestVideo1", ofType: "mp4")!
+//        print("LINE 1 with \(videoURL)")
+//        let video:Video = Video(videoURL: videoURL, videoName: "TestVideo1")
+//        print("LINE 2")
+//        video.uploadVideo()
+//        print("LINE 3")
     }
     
     

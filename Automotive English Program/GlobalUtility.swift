@@ -108,13 +108,11 @@ class GlobalUtility {
     
     //Merge videos together and send via FTP to server
     func mergeAndSend(){
+        print("Merging videos...")
         let completeMovie = mergeVideos()
-        print("Waiting for merge to be completed...")
-        //        return sendVideoDataViaFTP("TylerStone", password: "", ip: "192.168.1.102", fileName: completeMovie)
-//        globalUtility.addConversationVideos([completeMovie])
-        sleep(5)
         print("Finished merged movie at: \(completeMovie)")
-        let testVideo:Video = Video(videoURL: completeMovie,videoName: completeMovie)
+        print("Uploading Video...")
+        let testVideo:Video = Video(videoURL: completeMovie,videoName: "TEST\(Int(NSDate().timeIntervalSince1970))")
         testVideo.uploadVideo()
     }
     
@@ -145,8 +143,8 @@ class GlobalUtility {
             }
         }while(globalUtility.getOutputVideosLength() > 0)
         
+        //Default video is rotated 90 degrees after mergings for some reason. This line re-oriantates correctly.
         trackVideo.preferredTransform = CGAffineTransformMake(0, 1.0, 1.0, 0, 0, 0)
-        print("CURRENT TRANSFORM: \(composition.preferredTransform)")
         
         var completeMovie = NSTemporaryDirectory().stringByAppendingString("MERGED\(Int(NSDate().timeIntervalSince1970)).mp4")
         let completeMovieUrl = NSURL(fileURLWithPath: completeMovie)
@@ -169,49 +167,10 @@ class GlobalUtility {
                 complete=true
             }
         })
-        print("FILE SUCCESSFULLY COMPLETED AT \(completeMovie).")
-        globalUtility.addConversationVideos([completeMovie])
         var i = 0
         repeat{print("WAITING FOR EXPORT TO COMPLETE... \(i)");sleep(1);i=i+1;}while(!complete)
+        print("FILE SUCCESSFULLY COMPLETED AT \(completeMovie).")
         return completeMovie
-    }
-    
-    //FTP Send Data Method
-    func sendVideoDataViaFTP(username:String,password:String,ip:String,fileName:String){
-        print("DOING AN FTP!!")
-        let videoData = NSData(contentsOfURL: NSURL(fileURLWithPath: fileName))
-        print("got video data Length: \(videoData?.length)")
-        let ServerLocation = "/Users/TylerStone/FtpFiles/5911\(fileName)"
-        let FTPString = NSURL(string: "ftp://\(username):\(password)@\(ip):21/\(ServerLocation)")
-        print("FTP Connecting with URL \(FTPString)")
-        let FTPStream = CFWriteStreamCreateWithFTPURL(nil,FTPString!).takeUnretainedValue()
-        print("FTPSTREAM: \(FTPStream)")
-        let cfstatus    = CFWriteStreamOpen(FTPStream)
-        print("CFSTATUS: \(cfstatus)") //<< REPLACE
-        if cfstatus == false {print("ERROR: Failed to connect to FTP server.")}else{
-            let buf:UnsafePointer<UInt8>! = UnsafePointer<UInt8>((videoData?.bytes)!)
-            let buf2:UnsafePointer<UInt8>! = UnsafePointer<UInt8>((videoData?.bytes)!)
-            let buf3:UnsafeMutablePointer<Void>! = UnsafeMutablePointer(videoData!.bytes)
-            var totalBytesWritten = 0
-            var bytesWritten = 0
-            var bytesLeft = (videoData?.length)!
-            let fileLength = (videoData?.length)!
-            print("SENDING \(fileLength) BYTES:")
-            repeat{
-                bytesWritten = CFWriteStreamWrite(FTPStream, buf, bytesLeft)
-                print("BytesWritten: \(bytesWritten)")
-                totalBytesWritten += bytesWritten
-                if (bytesWritten < fileLength) {
-                    bytesLeft = fileLength - totalBytesWritten
-                    memmove(buf3, buf2 + bytesWritten, bytesLeft)
-                }else{bytesLeft = 0}
-                print("Bytes Left: \(bytesLeft)")
-                if CFWriteStreamCanAcceptBytes(FTPStream) == false{sleep(1)}
-            }while((totalBytesWritten < fileLength && bytesWritten >= 0) /*|| (bytesLeft != 0)*/)
-            if totalBytesWritten == fileLength{print("Files Successfully transferred!")}else{print("ERROR: File did not transfer successfully (bytes written != video length)")}
-            print("Closing Stream...")
-            CFWriteStreamClose(FTPStream)
-        }
     }
 
 }
