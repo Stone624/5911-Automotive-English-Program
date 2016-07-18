@@ -96,7 +96,7 @@ class Video {
         print("preparing upload request...")
         let downloadRequest = AWSS3TransferManagerDownloadRequest()
         downloadRequest.bucket = s3bucket
-        downloadRequest.key = self.name + "." + fileType
+        downloadRequest.key = downloadName
         downloadRequest.downloadingFileURL = downloadURL
         downloadRequest.downloadProgress = { (bytesSent:Int64, totalBytesSent:Int64,  totalBytesExpectedToSend:Int64) -> Void in
             dispatch_sync(dispatch_get_main_queue(), {() -> Void in
