@@ -26,18 +26,71 @@ class HomeController: UIViewController{
         
         let currentLanguageIsEnglish:Bool = globalUtility.getIsEnglishLanguageSetting()
         print("Loading page: Got Global Language Setting: English: \(currentLanguageIsEnglish)")
+        
+    
         if(currentLanguageIsEnglish){
             WelcomeTextLabel.text = "Welcome!"
-            HowToGetStartedTextButton.setTitle("How to get started", forState: .Normal)
-            MyCoachTextButton.setTitle("My Coach", forState: .Normal)
+            //how to get start function test
+            
+            func howTostart(){
+                
+                let x = Int(self.view.layer.frame.width * 0.1)
+                let y = Int(self.view.layer.frame.height * 0.85)
+                let width = Int(self.view.layer.frame.width * 0.8)
+                let height = 30
+                HowToGetStartedTextButton=UIButton(frame: CGRect(x:x,y: y,width:width,height: height))
+                HowToGetStartedTextButton.setTitle("How to Get Start", forState:.Normal)
+                HowToGetStartedTextButton.backgroundColor = .redColor()
+                HowToGetStartedTextButton.addTarget(self, action: #selector(HomeController.BlogButtonPressed(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+                self.view.addSubview(HowToGetStartedTextButton)
+                
+//            HowToGetStartedTextButton.setTitleColor(UIColor.redColor(), forState:.Normal)
+//            HowToGetStartedTextButton.frame=CGRectMake(15, 50, 300, 500)
+//            HowToGetStartedTextButton.addTarget(self, action: "pressedAction:", forControlEvents:.TouchUpInside)
+//            self.view.addSubview(HowToGetStartedTextButton)
+            }
+            
+            func pressedAction(sender:UIButton){
+                
+            }
+            
+            func myCoach(){
+                let x = Int(self.view.layer.frame.width * 0.1)
+                let y = Int(self.view.layer.frame.height * 0.85)
+                let width = Int(self.view.layer.frame.width * 0.8)
+                let height = 30
+                MyCoachTextButton=UIButton(frame: CGRect(x:x,y: y,width:width,height: height))
+                MyCoachTextButton.setTitle("My Coach", forState:.Normal)
+                MyCoachTextButton.backgroundColor = .redColor()
+                MyCoachTextButton.addTarget(self, action: #selector(HomeController.BlogButtonPressed(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+                self.view.addSubview(MyCoachTextButton)
+                
+            }
+    
+            
+            //MyCoachTextButton.setTitle("My Coach", forState: .Normal)
             LessonsTextButton.setTitle("Lessons", forState: .Normal)
             MyProfileTextButton.setTitle("My Profile", forState: .Normal)
         }else{
+            
+            func languageJap(){
+                
+                let x = Int(self.view.layer.frame.width * 0.1)
+                let y = Int(self.view.layer.frame.height * 0.85)
+                let width = Int(self.view.layer.frame.width * 0.8)
+                let height = 30
+                HowToGetStartedTextButton=UIButton(frame: CGRect(x:x,y: y,width:width,height: height))
             WelcomeTextLabel.text = "いらっしゃいませ！"
             HowToGetStartedTextButton.setTitle("始めましょう", forState: .Normal)
+                HowToGetStartedTextButton.backgroundColor = .redColor()
+                HowToGetStartedTextButton.addTarget(self, action: #selector(HomeController.BlogButtonPressed(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+                self.view.addSubview(HowToGetStartedTextButton)
+                
+    
             MyCoachTextButton.setTitle("マイ先生", forState: .Normal)
             LessonsTextButton.setTitle("授業", forState: .Normal)
             MyProfileTextButton.setTitle("マイプロフィール", forState: .Normal)
+            }
         }
 
         print("Home Page appeared.")
