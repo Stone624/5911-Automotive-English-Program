@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2DA225031D34558500759A65 /* TestAudioHaru.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2DA224FF1D34558500759A65 /* TestAudioHaru.mp3 */; };
+		2DA225041D34558500759A65 /* TestAudioSeseragi.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2DA225001D34558500759A65 /* TestAudioSeseragi.mp3 */; };
+		2DA225051D34558500759A65 /* TestVideo1.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 2DA225011D34558500759A65 /* TestVideo1.mp4 */; };
+		2DA225061D34558500759A65 /* TestVideo2.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 2DA225021D34558500759A65 /* TestVideo2.mp4 */; };
+		2DA225081D34678600759A65 /* getStart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA225071D34678600759A65 /* getStart.swift */; };
 		32090E2E1D12114000905E1D /* UnitTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32090E2D1D12114000905E1D /* UnitTable.swift */; };
 		320B461F1D05FEC900C0BD95 /* GlobalUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320B461E1D05FEC900C0BD95 /* GlobalUtility.swift */; };
 		320B46211D0911BC00C0BD95 /* Unit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320B46201D0911BC00C0BD95 /* Unit.swift */; };
@@ -30,10 +35,6 @@
 		32A36B271CED5ACB001CE145 /* Automotive_English_ProgramTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A36B261CED5ACB001CE145 /* Automotive_English_ProgramTests.swift */; };
 		32A36B321CED5ACB001CE145 /* Automotive_English_ProgramUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A36B311CED5ACB001CE145 /* Automotive_English_ProgramUITests.swift */; };
 		32AC48CA1CF39700005DE742 /* 5911HomePageMan.png in Resources */ = {isa = PBXBuildFile; fileRef = 32AC48C91CF39700005DE742 /* 5911HomePageMan.png */; };
-		32D595161D1B8B3C001EE6AB /* TestAudioHaru.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 32D595121D1B8B3C001EE6AB /* TestAudioHaru.mp3 */; };
-		32D595171D1B8B3C001EE6AB /* TestAudioSeseragi.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 32D595131D1B8B3C001EE6AB /* TestAudioSeseragi.mp3 */; };
-		32D595181D1B8B3C001EE6AB /* TestVideo1.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 32D595141D1B8B3C001EE6AB /* TestVideo1.mp4 */; };
-		32D595191D1B8B3C001EE6AB /* TestVideo2.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 32D595151D1B8B3C001EE6AB /* TestVideo2.mp4 */; };
 		32DB89281D2D93C80033C057 /* OsuHondaAEPLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 32DB89271D2D93C80033C057 /* OsuHondaAEPLogo.png */; };
 		32DEB5751CEF50D100FF30B1 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32DEB5741CEF50D100FF30B1 /* MobileCoreServices.framework */; };
 		32F13F921CF66B0600236609 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32F13F911CF66B0600236609 /* HomeController.swift */; };
@@ -57,6 +58,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2DA224FF1D34558500759A65 /* TestAudioHaru.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = TestAudioHaru.mp3; sourceTree = "<group>"; };
+		2DA225001D34558500759A65 /* TestAudioSeseragi.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = TestAudioSeseragi.mp3; sourceTree = "<group>"; };
+		2DA225011D34558500759A65 /* TestVideo1.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = TestVideo1.mp4; sourceTree = "<group>"; };
+		2DA225021D34558500759A65 /* TestVideo2.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = TestVideo2.mp4; sourceTree = "<group>"; };
+		2DA225071D34678600759A65 /* getStart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = getStart.swift; sourceTree = "<group>"; };
 		32090E2D1D12114000905E1D /* UnitTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnitTable.swift; sourceTree = "<group>"; };
 		320B461E1D05FEC900C0BD95 /* GlobalUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalUtility.swift; sourceTree = "<group>"; };
 		320B46201D0911BC00C0BD95 /* Unit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Unit.swift; sourceTree = "<group>"; };
@@ -86,10 +92,6 @@
 		32A36B311CED5ACB001CE145 /* Automotive_English_ProgramUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Automotive_English_ProgramUITests.swift; sourceTree = "<group>"; };
 		32A36B331CED5ACB001CE145 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		32AC48C91CF39700005DE742 /* 5911HomePageMan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 5911HomePageMan.png; sourceTree = "<group>"; };
-		32D595121D1B8B3C001EE6AB /* TestAudioHaru.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = TestAudioHaru.mp3; path = ../../../TestAudioHaru.mp3; sourceTree = "<group>"; };
-		32D595131D1B8B3C001EE6AB /* TestAudioSeseragi.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = TestAudioSeseragi.mp3; path = ../../../TestAudioSeseragi.mp3; sourceTree = "<group>"; };
-		32D595141D1B8B3C001EE6AB /* TestVideo1.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = TestVideo1.mp4; path = ../../../TestVideo1.mp4; sourceTree = "<group>"; };
-		32D595151D1B8B3C001EE6AB /* TestVideo2.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = TestVideo2.mp4; path = ../../../TestVideo2.mp4; sourceTree = "<group>"; };
 		32DB89271D2D93C80033C057 /* OsuHondaAEPLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = OsuHondaAEPLogo.png; sourceTree = "<group>"; };
 		32DEB5741CEF50D100FF30B1 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		32F13F911CF66B0600236609 /* HomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
@@ -124,6 +126,10 @@
 		327592A11D2EC91700C48148 /* Content */ = {
 			isa = PBXGroup;
 			children = (
+				2DA224FF1D34558500759A65 /* TestAudioHaru.mp3 */,
+				2DA225001D34558500759A65 /* TestAudioSeseragi.mp3 */,
+				2DA225011D34558500759A65 /* TestVideo1.mp4 */,
+				2DA225021D34558500759A65 /* TestVideo2.mp4 */,
 				3296BAE61D2ECCDE00921881 /* L1U1Caudio.m4a */,
 				3296BAE71D2ECCDE00921881 /* L1U1CP1.mp4 */,
 				3296BAE81D2ECCDE00921881 /* L1U1CP2.mp4 */,
@@ -132,10 +138,6 @@
 				3296BAEB1D2ECCDE00921881 /* L1U1CP5.mp4 */,
 				32AC48C91CF39700005DE742 /* 5911HomePageMan.png */,
 				3284464A1D05C3DC004CEE4E /* 5911Conversations1.png */,
-				32D595151D1B8B3C001EE6AB /* TestVideo2.mp4 */,
-				32D595141D1B8B3C001EE6AB /* TestVideo1.mp4 */,
-				32D595131D1B8B3C001EE6AB /* TestAudioSeseragi.mp3 */,
-				32D595121D1B8B3C001EE6AB /* TestAudioHaru.mp3 */,
 				32DB89271D2D93C80033C057 /* OsuHondaAEPLogo.png */,
 			);
 			name = Content;
@@ -181,6 +183,7 @@
 				320B46241D09130900C0BD95 /* ConversationsOneController.swift */,
 				32A36B131CED5ACB001CE145 /* ConversationsTwoController.swift */,
 				3249960B1D149CC300FF75D2 /* Lesson1.swift */,
+				2DA225071D34678600759A65 /* getStart.swift */,
 			);
 			path = "Automotive English Program";
 			sourceTree = "<group>";
@@ -271,7 +274,7 @@
 				TargetAttributes = {
 					32A36B0D1CED5ACB001CE145 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = 3KNNYG4W5A;
+						DevelopmentTeam = B4U4UU38ED;
 					};
 					32A36B211CED5ACB001CE145 = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -310,16 +313,16 @@
 			files = (
 				3284464B1D05C3DC004CEE4E /* 5911Conversations1.png in Resources */,
 				32AC48CA1CF39700005DE742 /* 5911HomePageMan.png in Resources */,
+				2DA225061D34558500759A65 /* TestVideo2.mp4 in Resources */,
 				32A36B1C1CED5ACB001CE145 /* LaunchScreen.storyboard in Resources */,
-				32D595171D1B8B3C001EE6AB /* TestAudioSeseragi.mp3 in Resources */,
+				2DA225031D34558500759A65 /* TestAudioHaru.mp3 in Resources */,
 				32DB89281D2D93C80033C057 /* OsuHondaAEPLogo.png in Resources */,
 				3296BAF11D2ECCDE00921881 /* L1U1CP5.mp4 in Resources */,
 				3296BAEE1D2ECCDE00921881 /* L1U1CP2.mp4 in Resources */,
 				3296BAF01D2ECCDE00921881 /* L1U1CP4.mp4 in Resources */,
-				32D595161D1B8B3C001EE6AB /* TestAudioHaru.mp3 in Resources */,
+				2DA225051D34558500759A65 /* TestVideo1.mp4 in Resources */,
 				3296BAEF1D2ECCDE00921881 /* L1U1CP3.mp4 in Resources */,
-				32D595191D1B8B3C001EE6AB /* TestVideo2.mp4 in Resources */,
-				32D595181D1B8B3C001EE6AB /* TestVideo1.mp4 in Resources */,
+				2DA225041D34558500759A65 /* TestAudioSeseragi.mp3 in Resources */,
 				32A36B191CED5ACB001CE145 /* Assets.xcassets in Resources */,
 				3296BAED1D2ECCDE00921881 /* L1U1CP1.mp4 in Resources */,
 				3296BAEC1D2ECCDE00921881 /* L1U1Caudio.m4a in Resources */,
@@ -355,6 +358,7 @@
 				32A36B141CED5ACB001CE145 /* ConversationsTwoController.swift in Sources */,
 				320B461F1D05FEC900C0BD95 /* GlobalUtility.swift in Sources */,
 				32090E2E1D12114000905E1D /* UnitTable.swift in Sources */,
+				2DA225081D34678600759A65 /* getStart.swift in Sources */,
 				3249960C1D149CC300FF75D2 /* Lesson1.swift in Sources */,
 				320B46251D09130900C0BD95 /* ConversationsOneController.swift in Sources */,
 				324E2D1E1CF6563200CC3B95 /* LoginController.swift in Sources */,
