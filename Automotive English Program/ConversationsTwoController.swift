@@ -180,11 +180,11 @@ class ConversationsTwoController: UIViewController, AVCaptureFileOutputRecording
         print("Start button Pressed! :)")
         buttonStart.hidden = true
         buttonStop.hidden = false
-        let str = NSTemporaryDirectory().stringByAppendingString("CCV\(Int(NSDate().timeIntervalSince1970)).mp4")//was just str
-        globalUtility.addOutputVideo(str)//videoOutputStrings.append(str)
+        let captureVideoURL = NSURL(fileURLWithPath: NSTemporaryDirectory().stringByAppendingString("CCV\(Int(NSDate().timeIntervalSince1970)).mp4"))//was just str
+        globalUtility.addOutputVideo(captureVideoURL)//videoOutputStrings.append(str)
         print("capture session currently using INPUTS: \(captureSession.inputs)")
         //no need to mess with audio session here. Capturesesion configured it for us.
-        captureSession.outputs[0].startRecordingToOutputFileURL(NSURL(fileURLWithPath: str), recordingDelegate: self)
+        captureSession.outputs[0].startRecordingToOutputFileURL(captureVideoURL, recordingDelegate: self)
     }
     func StopButtonPressed(sender: UIButton!) {
         print("STOP button pressed")
@@ -197,15 +197,13 @@ class ConversationsTwoController: UIViewController, AVCaptureFileOutputRecording
         buttonPlayback.hidden = false
         buttonSubmit.hidden = false
         
-        let filePath = globalUtility.getLastOutputVideo()//"/tmp/\(videoOutputStrings[videoOutputStrings.count-1])"
-        let fileManager = NSFileManager.defaultManager()
-        if fileManager.fileExistsAtPath(filePath) {print("FILE \(filePath) EXISTS")} else {print("FILE DNE")}
-        let movieURL = NSURL(fileURLWithPath: filePath/*"/tmp/\(videoOutputStrings[videoOutputStrings.count-1])"*/)
+//        let fileManager = NSFileManager.defaultManager()
+//        if fileManager.fileExistsAtPath(filePath.absoluteString) {print("FILE \(filePath) EXISTS")} else {print("FILE DNE")}
+        let movieURL = globalUtility.getLastOutputVideo()
         print("INIT AVASSET WITH: \(movieURL)")
         let asset3 = AVPlayer(URL: movieURL)
         NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(playerDidFinishPlaying),
                                                          name: AVPlayerItemDidPlayToEndTimeNotification, object: asset3.currentItem)
-//        asset3.seekToTime(kCMTimeZero)
         asset3.actionAtItemEnd = AVPlayerActionAtItemEnd.Pause
         videoPlaybackAsset = AVPlayerLayer(player: asset3)
         videoPlaybackAsset!.frame = CGRectMake(20, 130, 260, 250)

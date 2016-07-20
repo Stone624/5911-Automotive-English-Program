@@ -12,7 +12,8 @@
 		320B46211D0911BC00C0BD95 /* Unit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320B46201D0911BC00C0BD95 /* Unit.swift */; };
 		320B46231D09127600C0BD95 /* ConversationsStartController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320B46221D09127600C0BD95 /* ConversationsStartController.swift */; };
 		320B46251D09130900C0BD95 /* ConversationsOneController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320B46241D09130900C0BD95 /* ConversationsOneController.swift */; };
-		3249960C1D149CC300FF75D2 /* Lesson1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3249960B1D149CC300FF75D2 /* Lesson1.swift */; };
+		321384541D3D9114006217F9 /* FeedbackController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 321384531D3D9114006217F9 /* FeedbackController.swift */; };
+		3249960C1D149CC300FF75D2 /* Lesson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3249960B1D149CC300FF75D2 /* Lesson.swift */; };
 		324E2D1E1CF6563200CC3B95 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324E2D1D1CF6563200CC3B95 /* LoginController.swift */; };
 		3284464D1D05F1E0004CEE4E /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3284464C1D05F1E0004CEE4E /* ProfileController.swift */; };
 		3296BAEC1D2ECCDE00921881 /* L1U1Caudio.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 3296BAE61D2ECCDE00921881 /* L1U1Caudio.m4a */; };
@@ -21,6 +22,8 @@
 		3296BAEF1D2ECCDE00921881 /* L1U1CP3.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 3296BAE91D2ECCDE00921881 /* L1U1CP3.mp4 */; };
 		3296BAF01D2ECCDE00921881 /* L1U1CP4.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 3296BAEA1D2ECCDE00921881 /* L1U1CP4.mp4 */; };
 		3296BAF11D2ECCDE00921881 /* L1U1CP5.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 3296BAEB1D2ECCDE00921881 /* L1U1CP5.mp4 */; };
+		329C2C221D3DD2150088FF4C /* AboutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 329C2C211D3DD2150088FF4C /* AboutController.swift */; };
+		329C2C241D3DD23D0088FF4C /* MyCoachController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 329C2C231D3DD23D0088FF4C /* MyCoachController.swift */; };
 		32A36B121CED5ACB001CE145 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A36B111CED5ACB001CE145 /* AppDelegate.swift */; };
 		32A36B141CED5ACB001CE145 /* ConversationsTwoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A36B131CED5ACB001CE145 /* ConversationsTwoController.swift */; };
 		32A36B171CED5ACB001CE145 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32A36B151CED5ACB001CE145 /* Main.storyboard */; };
@@ -64,7 +67,8 @@
 		320B46201D0911BC00C0BD95 /* Unit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Unit.swift; sourceTree = "<group>"; };
 		320B46221D09127600C0BD95 /* ConversationsStartController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationsStartController.swift; sourceTree = "<group>"; };
 		320B46241D09130900C0BD95 /* ConversationsOneController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationsOneController.swift; sourceTree = "<group>"; };
-		3249960B1D149CC300FF75D2 /* Lesson1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lesson1.swift; sourceTree = "<group>"; };
+		321384531D3D9114006217F9 /* FeedbackController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackController.swift; sourceTree = "<group>"; };
+		3249960B1D149CC300FF75D2 /* Lesson.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lesson.swift; sourceTree = "<group>"; };
 		324E2D1D1CF6563200CC3B95 /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		3284464C1D05F1E0004CEE4E /* ProfileController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileController.swift; sourceTree = "<group>"; };
 		3296BAE61D2ECCDE00921881 /* L1U1Caudio.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = L1U1Caudio.m4a; path = Content/Lesson1Unit1/L1U1Caudio.m4a; sourceTree = "<group>"; };
@@ -73,6 +77,8 @@
 		3296BAE91D2ECCDE00921881 /* L1U1CP3.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = L1U1CP3.mp4; path = Content/Lesson1Unit1/L1U1CP3.mp4; sourceTree = "<group>"; };
 		3296BAEA1D2ECCDE00921881 /* L1U1CP4.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = L1U1CP4.mp4; path = Content/Lesson1Unit1/L1U1CP4.mp4; sourceTree = "<group>"; };
 		3296BAEB1D2ECCDE00921881 /* L1U1CP5.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = L1U1CP5.mp4; path = Content/Lesson1Unit1/L1U1CP5.mp4; sourceTree = "<group>"; };
+		329C2C211D3DD2150088FF4C /* AboutController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutController.swift; sourceTree = "<group>"; };
+		329C2C231D3DD23D0088FF4C /* MyCoachController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyCoachController.swift; sourceTree = "<group>"; };
 		32A36B0E1CED5ACB001CE145 /* Automotive English Program.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Automotive English Program.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		32A36B111CED5ACB001CE145 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		32A36B131CED5ACB001CE145 /* ConversationsTwoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsTwoController.swift; sourceTree = "<group>"; };
@@ -183,14 +189,17 @@
 				320B461E1D05FEC900C0BD95 /* GlobalUtility.swift */,
 				324E2D1D1CF6563200CC3B95 /* LoginController.swift */,
 				32F13F911CF66B0600236609 /* HomeController.swift */,
+				329C2C211D3DD2150088FF4C /* AboutController.swift */,
+				329C2C231D3DD23D0088FF4C /* MyCoachController.swift */,
 				3284464C1D05F1E0004CEE4E /* ProfileController.swift */,
 				320B46201D0911BC00C0BD95 /* Unit.swift */,
 				32090E2D1D12114000905E1D /* UnitTable.swift */,
 				320B46221D09127600C0BD95 /* ConversationsStartController.swift */,
 				320B46241D09130900C0BD95 /* ConversationsOneController.swift */,
 				32A36B131CED5ACB001CE145 /* ConversationsTwoController.swift */,
-				3249960B1D149CC300FF75D2 /* Lesson1.swift */,
+				3249960B1D149CC300FF75D2 /* Lesson.swift */,
 				F72755571D2ED62E00A3657B /* Video.swift */,
+				321384531D3D9114006217F9 /* FeedbackController.swift */,
 			);
 			path = "Automotive English Program";
 			sourceTree = "<group>";
@@ -426,15 +435,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				321384541D3D9114006217F9 /* FeedbackController.swift in Sources */,
 				3284464D1D05F1E0004CEE4E /* ProfileController.swift in Sources */,
 				F72755581D2ED62E00A3657B /* Video.swift in Sources */,
 				320B46231D09127600C0BD95 /* ConversationsStartController.swift in Sources */,
 				320B46211D0911BC00C0BD95 /* Unit.swift in Sources */,
+				329C2C221D3DD2150088FF4C /* AboutController.swift in Sources */,
+				329C2C241D3DD23D0088FF4C /* MyCoachController.swift in Sources */,
 				32F13F921CF66B0600236609 /* HomeController.swift in Sources */,
 				32A36B141CED5ACB001CE145 /* ConversationsTwoController.swift in Sources */,
 				320B461F1D05FEC900C0BD95 /* GlobalUtility.swift in Sources */,
 				32090E2E1D12114000905E1D /* UnitTable.swift in Sources */,
-				3249960C1D149CC300FF75D2 /* Lesson1.swift in Sources */,
+				3249960C1D149CC300FF75D2 /* Lesson.swift in Sources */,
 				320B46251D09130900C0BD95 /* ConversationsOneController.swift in Sources */,
 				324E2D1E1CF6563200CC3B95 /* LoginController.swift in Sources */,
 				32A36B121CED5ACB001CE145 /* AppDelegate.swift in Sources */,

@@ -13,15 +13,24 @@ import AWSS3
 
 class Video {
     
+    //URL of LOCAL video to upload
     var URL: NSURL
-    var name : String
+    //Name of REMOTE destination the file gets written to
+    var s3destination : String
     
     
-    init (videoURL: String, videoName: String){
-        print("ITITNG WITH \(videoURL) and \(videoName)")
+    init (videoURL: String, s3destination: String){
+        print("ITITNG WITH \(videoURL) and \(s3destination)")
         self.URL = NSURL(fileURLWithPath: videoURL)
-        self.name = videoName
-        print("Video object Initialized with \(self.URL) and \(self.name)")
+        self.s3destination = s3destination
+        print("Video object Initialized with \(self.URL) and \(self.s3destination)")
+    }
+    
+    init (videoURL: NSURL, s3destination: String){
+        print("ITITNG WITH \(videoURL) and \(s3destination)")
+        self.URL = videoURL
+        self.s3destination = s3destination
+        print("Video object Initialized with \(self.URL) and \(self.s3destination)")
     }
     
     // function will send this video to S3 bucket
@@ -29,20 +38,13 @@ class Video {
         print("Upload video method called.")
         // setup variables for s3 upload request
         let s3bucket = "osuhondaaep"
-        let fileType = "mp4"
-        //next done in AppDelegate
-        //        let cognitoPoolID = "us-east-1:356286dd-f7c3-4c64-91f6-f8a7b77cc746"
-        //        let region = AWSRegionType.USEast1
-        //        let credentialsProvider = AWSCognitoCredentialsProvider(regionType: region, identityPoolId: cognitoPoolID)
-        //        let configuration = AWSServiceConfiguration(region: region, credentialsProvider: credentialsProvider)
-        //        AWSServiceManager.defaultServiceManager().defaultServiceConfiguration = configuration
-        print("variables setup and awsServiceManager configuration set.")
+        let fileType = "mov"
         
         //prepare upload request
         print("preparing upload request...")
         let uploadRequest = AWSS3TransferManagerUploadRequest()
         uploadRequest.bucket = s3bucket
-        uploadRequest.key = self.name + "." + fileType
+        uploadRequest.key = self.s3destination
         uploadRequest.body = self.URL
         uploadRequest.uploadProgress = { (bytesSent:Int64, totalBytesSent:Int64,  totalBytesExpectedToSend:Int64) -> Void in
             dispatch_sync(dispatch_get_main_queue(), {() -> Void in
@@ -71,29 +73,20 @@ class Video {
     }
     
     // function will download a video from the S3 bucket
-    class func downloadVideo(downloadName: String) -> Video{
+    // Given the string for the name of the file in the s3 bucket,
+    // it returns an NSURL pointing to the downloaded resource.
+    class func downloadVideo(downloadName: String) -> NSURL{
         print("Download video method called.")
+//        let sema: dispatch_semaphore_t = dispatch_semaphore_create(0)
         // setup variables for s3 upload request
         let s3bucket = "osuhondaaep"
-        let fileType = "mp4"
-        //next done in AppDelegate
-        //        let cognitoPoolID = "us-east-1:356286dd-f7c3-4c64-91f6-f8a7b77cc746"
-        //        let region = AWSRegionType.USEast1
-        //        let credentialsProvider = AWSCognitoCredentialsProvider(regionType: region, identityPoolId: cognitoPoolID)
-        //        let configuration = AWSServiceConfiguration(region: region, credentialsProvider: credentialsProvider)
-        //        AWSServiceManager.defaultServiceManager().defaultServiceConfiguration = configuration
-        print("variables setup and awsServiceManager configuration set.")
-        
         // prepare download URL
-        let downloadPath: NSString = NSTemporaryDirectory() + downloadName
+        let downloadPath: NSString = NSTemporaryDirectory().stringByAppendingString("FROMAWS\(Int(NSDate().timeIntervalSince1970)).mp4")//downloadName
         let downloadURL: NSURL = NSURL(fileURLWithPath: downloadPath as String)
         print("DOWNLOAD URL: \(downloadURL.absoluteString), DOWNLOAD PATH: \(downloadPath as String)")
         
-        // create a video object to return with a reference to the downloaded file
-        let downloadedVideo: Video = Video(videoURL: downloadURL.absoluteString, videoName: downloadName)
-        
         //prepare upload request
-        print("preparing upload request...")
+        print("preparing download request...")
         let downloadRequest = AWSS3TransferManagerDownloadRequest()
         downloadRequest.bucket = s3bucket
         downloadRequest.key = downloadName
@@ -104,7 +97,8 @@ class Video {
             })
         }
         print("download request preparation complete.")
-        AWSS3TransferManager.defaultS3TransferManager().download(downloadRequest).continueWithBlock{ (task) -> AnyObject! in
+        AWSS3TransferManager.defaultS3TransferManager().download(downloadRequest)//.continueWithExecutor(AWSExecutor.mainThreadExecutor(), withBlock:{ (task) -> AnyObject! in
+            .continueWithBlock{ (task) -> AnyObject! in
             if let error = task.error{
                 print("Download failed (\(error)")
             }
@@ -116,11 +110,15 @@ class Video {
             } else {
                 print("***AWS S3 DOWNLOAD FAILED.")
             }
+//            dispatch_semaphore_signal(sema)
+//            globalUtility.setAWSResourceDownloadComplete(true)
             
             return nil
         }
         
-        return downloadedVideo
+//        dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER)
+        
+        return downloadURL
 
     }
     

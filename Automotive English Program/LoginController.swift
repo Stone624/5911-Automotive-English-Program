@@ -106,7 +106,9 @@ class LoginController: UIViewController,UITextFieldDelegate{
         let y = Int(self.view.layer.frame.height * 0.85)
         let width = Int(self.view.layer.frame.width * 0.8)
         let height = 50
-        let loginButton = UIButton(frame: CGRect(x: x, y: y, width: width, height: height))
+        //let loginButton = UIButton(frame: CGRect(x: x, y: y, width: width, height: height))
+        let loginButton = UIButton.init(type: UIButtonType.System)
+        loginButton.frame = CGRect(x: x, y: y, width: width, height: height)
         loginButton.setTitle("Click Here To Login", forState: .Normal)
         loginButton.backgroundColor = .greenColor()
         loginButton.addTarget(self, action: #selector(LoginController.LoginButtonPressed), forControlEvents: UIControlEvents.TouchUpInside)
@@ -116,7 +118,13 @@ class LoginController: UIViewController,UITextFieldDelegate{
     
     func textFieldShouldReturn(textField: UITextField) -> Bool{
         textField.resignFirstResponder()
+        self.view.frame.origin.y += 80
+        self.view.frame.size.height -= 80
         return false
+    }
+    func textFieldDidBeginEditing(textField: UITextField) {
+        self.view.frame.origin.y -= 80
+        self.view.frame.size.height += 80
     }
     
     func LoginButtonPressed(sender: AnyObject) {
@@ -127,8 +135,9 @@ class LoginController: UIViewController,UITextFieldDelegate{
         print("Username entered: \(username)")
         print("Password entered: \(password)")
         
-        if username == "" && password == ""{
+        if username == "A.1" && password == ""{
             print("Access granted")
+            globalUtility.setUsername(username!)
             let vc = self.storyboard?.instantiateViewControllerWithIdentifier("HomePageNavigationController")
             self.presentViewController(vc! as UIViewController, animated: true, completion: nil)
         } else {
@@ -140,5 +149,10 @@ class LoginController: UIViewController,UITextFieldDelegate{
             alert.show()
         }
     }
+    
+//    func keyboardWillShow(){
+//        self.view.frame.origin.y += 80
+//        self.view.frame.size.height += 80
+//    }
     
 }

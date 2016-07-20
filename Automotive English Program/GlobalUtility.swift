@@ -5,50 +5,66 @@
 //  Created by Tyler Stone on 6/6/16.
 //  Copyright © 2016 Honda+OSU. All rights reserved.
 //
+//  GlobalUtility (and instance globalUtility) is a class that provides
+//  app-wide global utility functions for various cases. This includes
+//  dynamic information that is generated in one view, meant for another
+//  view. The current uses (field/method pairs) that exist are:
+//
+//  Current User        -- storing the name of the user for user-specific data
+//  Language Settings   -- Switch between Japanese and English for text
+//  Unit Page           -- Data for a specific Unit view
+//  Conversations       -- data necessary for a conversation flow 
+//
+//  Audio Session       -- Proper function for turning Audio Session on/off
+//  Video Merge         -- functions for merging the conversation videos, and uploading to S3
+
+
+
 
 import Foundation
 import AVFoundation
 
 class GlobalUtility {
-    //Fields
-    ////Language Settings
+
+    //// Current User
+    var username:String = "nil.-1"
+    func getUsername() -> String{return username}
+    func setUsername(Username:String){self.username = Username}
+    
+    //// Language Settings
     var currentLanguageIsEnglish:Bool = true
+    func getIsEnglishLanguageSetting() -> Bool{return currentLanguageIsEnglish}
+    func switchLanguageSetting(){currentLanguageIsEnglish = !currentLanguageIsEnglish}
+    
     ////Unit Page Settings
     var unitNumber:Int = 0
     var unitName:String = ""
-    var unitImageLink:String = ""
-    ////Conversation Page settings
-    var conversationImageLink:String = ""
-    var conversationAudioLink:String = ""
-    var conversation = [String]()
-    var conversationVideos = [String]()
-    var outputVideos = [String]()
-    
-    //Methods
-    ////Language Settings
-    func getIsEnglishLanguageSetting() -> Bool{
-        return currentLanguageIsEnglish
-    }
-    func switchLanguageSetting(){
-        currentLanguageIsEnglish = !currentLanguageIsEnglish
-    }
-    ////Unit Page Settings
+    var unitImageLink:NSURL?
     func setUnitNumber(number:Int){unitNumber = number}
     func getUnitNumber() -> Int{return unitNumber}
     
     func setUnitName(name:String){unitName = name}
     func getUnitName() -> String{return unitName}
     
-    func setUnitImageLink(name:String){unitImageLink = name}
-    func getUnitImageLink()-> String{return unitImageLink}
+    func setUnitImageLink(name:NSURL){unitImageLink = name}
+    func getUnitImageLink()-> NSURL{return unitImageLink!}
     
-    ////Conversation page settings
-    //Image
-    func setConversationImageLink(name:String){conversationImageLink = name}
-    func getConversationImageLink()-> String{return conversationImageLink}
-    //Audio
-    func setConversationAudioLink(name:String){conversationAudioLink = name}
-    func getConversationAudioLink()-> String{return conversationAudioLink}
+    ////Conversation Page settings
+    var conversationImageLink:NSURL?
+    var conversationAudioLink:NSURL?
+    var conversationVideoLink:NSURL?
+    var conversation = [String]()
+    var conversationVideos = [NSURL]()
+    var outputVideos = [NSURL]()
+    //OverallImage
+    func setConversationImageLink(name:NSURL){conversationImageLink = name}
+    func getConversationImageLink()-> NSURL{return conversationImageLink!}
+    //OverallAudio
+    func setConversationAudioLink(name:NSURL){conversationAudioLink = name}
+    func getConversationAudioLink()-> NSURL{return conversationAudioLink!}
+    //OverallVideo
+    func setConversationVideoLink(name:NSURL){conversationAudioLink = name}
+    func getConversationVideoLink()-> NSURL{return conversationAudioLink!}
     //Sentences
     func addConversationSentences(sentences:[String]){
         conversation.removeAll()
@@ -62,26 +78,41 @@ class GlobalUtility {
     }
     func getConversationsLength() -> Int{return conversation.count}
     //Video
-    func addConversationVideos(sentences:[String]){
+    func addConversationVideos(sentences:[NSURL]){
         conversationVideos.removeAll()
         for sentence in sentences{
             conversationVideos.append(sentence)
         }
     }
-    func getAndRemoveHeadConversationVideos() -> String{
+    func getAndRemoveHeadConversationVideos() -> NSURL{
         let sentence = conversationVideos.removeFirst()
         outputVideos.append(sentence)
         return sentence
     }
     func getConversationVideosLength() -> Int{return conversationVideos.count}
-    func addOutputVideo(video:String){outputVideos.append(video)}
+    func addOutputVideo(video:NSURL){outputVideos.append(video)}
     func removeLastOutputVideo(){outputVideos.removeLast()}
-    func getLastOutputVideo()->String{return outputVideos[outputVideos.count-1]}
-    func getAndRemoveHeadOutputVideos() -> String{
+    func getLastOutputVideo()->NSURL{return outputVideos[outputVideos.count-1]}
+    func getAndRemoveHeadOutputVideos() -> NSURL{
         let sentence = outputVideos.removeFirst()
         return sentence
     }
     func getOutputVideosLength() -> Int{return outputVideos.count}
+    
+    
+    //AWS S3 download synchronous key
+    var AWSResourceDownloadComplete: Bool = false
+    func IsAWSResourceDownloadComplete()->Bool{
+        if(AWSResourceDownloadComplete){
+            AWSResourceDownloadComplete = false
+            return true
+        }else{
+            return false
+        }
+    }
+    func setAWSResourceDownloadComplete(complete:Bool){
+        AWSResourceDownloadComplete = complete
+    }
     
     //////////////////////////////////////////////////////////////
     //            ^^^ Object fields and methods ^^^             //
@@ -112,7 +143,7 @@ class GlobalUtility {
         let completeMovie = mergeVideos()
         print("Finished merged movie at: \(completeMovie)")
         print("Uploading Video...")
-        let testVideo:Video = Video(videoURL: completeMovie,videoName: "TEST\(Int(NSDate().timeIntervalSince1970))")
+        let testVideo:Video = Video(videoURL: completeMovie,s3destination: "\(username)/\(Int(NSDate().timeIntervalSince1970)).mov")
         testVideo.uploadVideo()
     }
     
@@ -123,8 +154,7 @@ class GlobalUtility {
         let trackAudio:AVMutableCompositionTrack = composition.addMutableTrackWithMediaType(AVMediaTypeAudio, preferredTrackID: CMPersistentTrackID())
         var insertTime = kCMTimeZero
         repeat{
-            let moviePath = globalUtility.getAndRemoveHeadOutputVideos()
-            let moviePathUrl = NSURL(fileURLWithPath: moviePath)
+            let moviePathUrl = globalUtility.getAndRemoveHeadOutputVideos()
             let sourceAsset = AVURLAsset(URL: moviePathUrl, options: nil)
             
             let tracks = sourceAsset.tracksWithMediaType(AVMediaTypeVideo)

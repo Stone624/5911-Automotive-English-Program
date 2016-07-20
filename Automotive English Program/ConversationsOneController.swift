@@ -57,8 +57,7 @@ class ConversationsOneController: UIViewController{
     }
     
     func initVideos(){
-        let URL1 = globalUtility.getAndRemoveHeadConversationVideos()
-        let movieURL = NSURL(fileURLWithPath: URL1)
+        let movieURL = globalUtility.getAndRemoveHeadConversationVideos()
         let asset3 = AVPlayer(URL: movieURL)
         NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(playerDidFinishPlaying),
                                                          name: AVPlayerItemDidPlayToEndTimeNotification, object: asset3.currentItem)

@@ -44,32 +44,33 @@ class HomeController: UIViewController{
     }
     
     @IBAction func OneOnOneButtonPressed(sender: AnyObject) {
-        print("Going to 1-on-1 webpage.")
-        if let url = NSURL(string: "http://www.google.com") {
-            UIApplication.sharedApplication().openURL(url)
-        } else {
-            print("invalid url")
-        }
+//        print("Going to 1-on-1 webpage.")
+//        if let url = NSURL(string: "http://www.google.com") {
+//            UIApplication.sharedApplication().openURL(url)
+//        } else {
+//            print("invalid url")
+//        }
+        let vc = self.storyboard?.instantiateViewControllerWithIdentifier("FeedbackController")
+        self.presentViewController(vc! as UIViewController, animated: true, completion: nil)
+//        Video.downloadVideo("someFolder/TestVideo1.mp4")
     }
 
     @IBAction func BlogButtonPressed(sender: AnyObject) {
-        print("Going to blog.")
-        if let url = NSURL(string: "http://u.osu.edu/intermediate/") {
-            UIApplication.sharedApplication().openURL(url)
-        } else {
-            print("invalid url")
-        }
+//        print("Going to blog.")
+//        if let url = NSURL(string: "http://u.osu.edu/intermediate/") {
+//            UIApplication.sharedApplication().openURL(url)
+//        } else {
+//            print("invalid url")
+//        }
         //TESTING VIDEO
-<<<<<<< HEAD
-//        let videoURL = NSBundle.mainBundle().pathForResource("TestVideo1", ofType: "mp4")!
-//        print("LINE 1 with \(videoURL)")
-//        let video:Video = Video(videoURL: videoURL, videoName: "TestVideo1")
-//        print("LINE 2")
-//        video.uploadVideo()
-//        print("LINE 3")
-=======
-        var video: Video = Video.downloadVideo("TestVideo1.mp4")
->>>>>>> origin/AWS
+        let videoURL = NSBundle.mainBundle().pathForResource("TestVideo1", ofType: "mp4")!
+        print("LINE 1 with \(videoURL)")
+        let video:Video = Video(videoURL: videoURL, s3destination: "TestVideo1")
+        print("LINE 2")
+        video.uploadVideo()
+        print("LINE 3")
+//        let vc = self.storyboard?.instantiateViewControllerWithIdentifier("FeedbackController")
+//        self.presentViewController(vc! as UIViewController, animated: true, completion: nil)
     }
     
     

@@ -17,18 +17,20 @@ class UnitTable: UITableViewController{
         
     }
     
-    var data = ["Pronunciation","Conversations","Speaking Assessment"]
+    var data = ["Pronunciation","Conversations","Speaking Assessment","Feedback"]
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return 4
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("UnitCell", forIndexPath: indexPath) as UITableViewCell
+//        let cell = tableView.dequeueReusableCellWithIdentifier("UnitCell", forIndexPath: indexPath) as UITableViewCell
+        let style = UITableViewCellStyle.Default
+        let cell = UITableViewCell(style: style, reuseIdentifier: "UnitCell")
         cell.textLabel?.text = data[indexPath.row]
         return cell
     }
@@ -42,6 +44,9 @@ class UnitTable: UITableViewController{
             self.presentViewController(vc! as UIViewController, animated: true, completion: nil)
         case 2:
             print("Speaking Assessment Pressed.")
+        case 3:
+            let vc = self.storyboard?.instantiateViewControllerWithIdentifier("FeedbackController")
+            self.presentViewController(vc! as UIViewController, animated: true, completion: nil)
         default:
             print("How did you get here?")
         }
