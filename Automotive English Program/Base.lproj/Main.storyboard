@@ -163,10 +163,12 @@
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
+                        <outlet property="BlogTextButton" destination="H0O-V8-isV" id="ffl-Fi-DBZ"/>
                         <outlet property="HowToGetStartedTextButton" destination="kME-Mo-wSW" id="ybN-aS-yVw"/>
                         <outlet property="LessonsTextButton" destination="C48-gm-fPc" id="rAS-We-LHR"/>
                         <outlet property="MyCoachTextButton" destination="AyP-Qf-ChH" id="Xmz-DV-raE"/>
                         <outlet property="MyProfileTextButton" destination="BHi-TF-Vfo" id="87x-Qq-1j0"/>
+                        <outlet property="OneOnOneTextButton" destination="Wyz-Lg-ZEh" id="nnB-GW-fEI"/>
                         <outlet property="WelcomeTextLabel" destination="XS4-LK-IC0" id="wbW-1A-aVt"/>
                     </connections>
                 </viewController>
@@ -419,7 +421,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GYe-Je-YTg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3043.5" y="1050"/>
+            <point key="canvasLocation" x="3078" y="1018"/>
         </scene>
         <!--Unit 1 Pronunciation-->
         <scene sceneID="Aeo-tt-l1c">
@@ -520,6 +522,13 @@
                                 </variation>
                                 <connections>
                                     <action selector="PlayConversationAudioButtonPressed:" destination="0vB-MS-hKs" eventType="touchUpInside" id="rwz-Lg-t77"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bYI-gW-4wA">
+                                <rect key="frame" x="124" y="460" width="72" height="30"/>
+                                <state key="normal" title="Play Video"/>
+                                <connections>
+                                    <action selector="PlayConversationVideoButtonPressed:" destination="0vB-MS-hKs" eventType="touchUpInside" id="4l9-P7-hUo"/>
                                 </connections>
                             </button>
                         </subviews>

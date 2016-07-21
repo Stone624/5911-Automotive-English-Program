@@ -63,8 +63,8 @@ class GlobalUtility {
     func setConversationAudioLink(name:NSURL){conversationAudioLink = name}
     func getConversationAudioLink()-> NSURL{return conversationAudioLink!}
     //OverallVideo
-    func setConversationVideoLink(name:NSURL){conversationAudioLink = name}
-    func getConversationVideoLink()-> NSURL{return conversationAudioLink!}
+    func setConversationVideoLink(name:NSURL){conversationVideoLink = name}
+    func getConversationVideoLink()-> NSURL{return conversationVideoLink!}
     //Sentences
     func addConversationSentences(sentences:[String]){
         conversation.removeAll()

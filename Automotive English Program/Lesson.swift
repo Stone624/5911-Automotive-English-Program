@@ -42,23 +42,25 @@ class Lesson: UITableViewController{
                 globalUtility.setUnitNumber(1)
                 globalUtility.setUnitImageLink(NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("5911HomePageMan", ofType: "png")!))
                 globalUtility.setConversationImageLink(NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("5911Conversations1", ofType: "png")!))
+                globalUtility.setConversationVideoLink(Video.downloadVideo("someFolder/TestVideo1.mp4"))//"staticContent/L1U1FullConversation.mp4"))
                 globalUtility.addConversationSentences(["Hi, I'm Mia Clarkson",
-                "Hi, My name is [your full name]",
-                "Could you spell that for me?",
-                "Yes. It's [spell your name].",
-                "It's nice to meet you",
-                "It's nice to meet you too.",
-                "Where are you from?",
-                "I'm from [your home town], Japan. Where are you from?",
-                "I'm from Toronto Canada.",
+//                "Hi, My name is [your full name]",
+//                "Could you spell that for me?",
+//                "Yes. It's [spell your name].",
+//                "It's nice to meet you",
+//                "It's nice to meet you too.",
+//                "Where are you from?",
+//                "I'm from [your home town], Japan. Where are you from?",
+//                "I'm from Toronto Canada.",
                 "I see."])
                 globalUtility.setConversationAudioLink(NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("L1U1Caudio", ofType: "m4a")!))
                 globalUtility.addConversationVideos([
-                    NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("L1U1CP1", ofType: "mp4")!),
-                NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("L1U1CP2", ofType: "mp4")!),
-                NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("L1U1CP3", ofType: "mp4")!),
-                NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("L1U1CP4", ofType: "mp4")!),
-                NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("L1U1CP5", ofType: "mp4")!)])
+                    NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("L1U1CP1", ofType: "mp4")!)
+//                NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("L1U1CP2", ofType: "mp4")!),
+//                NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("L1U1CP3", ofType: "mp4")!),
+//                NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("L1U1CP4", ofType: "mp4")!),
+//                NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("L1U1CP5", ofType: "mp4")!)
+                    ])
             //Unit 2
             case 1:
                 print("Set unit and global things for Lesson 1 Unit 2")

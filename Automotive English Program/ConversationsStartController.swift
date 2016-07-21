@@ -17,14 +17,15 @@ class ConversationsStartController: UIViewController, AVAudioPlayerDelegate{
     @IBOutlet weak var ConversationImage: UIImageView!
     var asset4:AVAudioPlayer?
     var asset5 = AVAudioSession.sharedInstance()
+    var videoPlaybackAsset:AVPlayerLayer?
+    let fullConvoMovieURL = globalUtility.getConversationVideoLink()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         print("Conversations Start Page loaded.")
         ConversationImage.image = UIImage(data: NSData(contentsOfURL: globalUtility.getConversationImageLink())!)
-            //.init(named: globalUtility.getConversationImageLink())
         print("--Convo Image \(globalUtility.getConversationImageLink()) Posted.")
-        initAudio()
+//        initAudio()
     }
     @IBAction func PlayConversationAudioButtonPressed(sender: AnyObject) {
         print("--Play Button Pressed")
@@ -38,13 +39,14 @@ class ConversationsStartController: UIViewController, AVAudioPlayerDelegate{
             print("----Audio is currently playing. Doing nothing")
         }
     }
+
     
     func initAudio(){
         var v1 = true
         var v2 = true
-        let movieURL = globalUtility.getConversationAudioLink()
+        let audioURL = globalUtility.getConversationAudioLink()
         do{
-            try asset4 = AVAudioPlayer(contentsOfURL: movieURL)
+            try asset4 = AVAudioPlayer(contentsOfURL: audioURL)
             asset4?.delegate = self
         } catch{print("**ERROR: AVAudioPlayer Init Failed.");v1=false}
         do{
@@ -67,4 +69,42 @@ class ConversationsStartController: UIViewController, AVAudioPlayerDelegate{
         }
         //UNHIDE BUTTONS
     }
+    
+    
+    @IBAction func PlayConversationVideoButtonPressed(sender: AnyObject) {
+        print("Button Pressed.")
+        globalUtility.requestAudioSession(true)
+        initVideos()
+        videoPlaybackAsset?.player?.play()
+    }
+    
+    func initVideos(){
+        let asset3 = AVPlayer(URL: fullConvoMovieURL)
+        print("Playing with URL: \(fullConvoMovieURL)")
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(playerDidFinishPlaying),
+                                                         name: AVPlayerItemDidPlayToEndTimeNotification, object: asset3.currentItem)
+        asset3.seekToTime(kCMTimeZero)
+        asset3.actionAtItemEnd = AVPlayerActionAtItemEnd.Pause
+        videoPlaybackAsset = AVPlayerLayer(player: asset3)
+        self.view.frame.origin.y -= 200
+        self.view.frame.size.height += 200
+        videoPlaybackAsset!.frame = CGRectMake(20, 450, 260, 250)
+        videoPlaybackAsset!.backgroundColor = UIColor.orangeColor().CGColor
+        videoPlaybackAsset?.videoGravity = AVLayerVideoGravityResizeAspect
+        self.view.layer.addSublayer(videoPlaybackAsset!)
+    }
+    
+    func playerDidFinishPlaying(note: NSNotification){
+        videoPlaybackAsset?.player?.pause()
+        videoPlaybackAsset?.player = nil
+        videoPlaybackAsset?.removeFromSuperlayer()
+        videoPlaybackAsset = nil
+        
+        print("playback layer removed and nilled")
+        globalUtility.requestAudioSession(false)
+        self.view.frame.origin.y += 200
+        self.view.frame.size.height -= 200
+        
+    }
+    
 }
