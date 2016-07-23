@@ -25,7 +25,7 @@ class ConversationsStartController: UIViewController, AVAudioPlayerDelegate{
         print("Conversations Start Page loaded.")
         ConversationImage.image = UIImage(data: NSData(contentsOfURL: globalUtility.getConversationImageLink())!)
         print("--Convo Image \(globalUtility.getConversationImageLink()) Posted.")
-//        initAudio()
+        initAudio()
     }
     @IBAction func PlayConversationAudioButtonPressed(sender: AnyObject) {
         print("--Play Button Pressed")
@@ -86,9 +86,13 @@ class ConversationsStartController: UIViewController, AVAudioPlayerDelegate{
         asset3.seekToTime(kCMTimeZero)
         asset3.actionAtItemEnd = AVPlayerActionAtItemEnd.Pause
         videoPlaybackAsset = AVPlayerLayer(player: asset3)
-        self.view.frame.origin.y -= 200
-        self.view.frame.size.height += 200
-        videoPlaybackAsset!.frame = CGRectMake(20, 450, 260, 250)
+//        self.view.frame.origin.y -= 300
+//        self.view.frame.size.height += 300
+        let x = Int(self.view.layer.frame.width * 0.0)
+        let y = Int(self.view.layer.frame.height * 0.0)//.2
+        let width = Int(self.view.layer.frame.width * 1.0)
+        let height = Int(self.view.layer.frame.height * 1.0)//0.65)
+        videoPlaybackAsset!.frame = CGRectMake(CGFloat(x), CGFloat(y), CGFloat(width), CGFloat(height))
         videoPlaybackAsset!.backgroundColor = UIColor.orangeColor().CGColor
         videoPlaybackAsset?.videoGravity = AVLayerVideoGravityResizeAspect
         self.view.layer.addSublayer(videoPlaybackAsset!)
@@ -102,8 +106,8 @@ class ConversationsStartController: UIViewController, AVAudioPlayerDelegate{
         
         print("playback layer removed and nilled")
         globalUtility.requestAudioSession(false)
-        self.view.frame.origin.y += 200
-        self.view.frame.size.height -= 200
+//        self.view.frame.origin.y += 300
+//        self.view.frame.size.height -= 300
         
     }
     

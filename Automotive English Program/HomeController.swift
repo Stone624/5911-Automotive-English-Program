@@ -2,6 +2,22 @@
 //  HomeController.swift
 //  Automotive English Program
 //
+//  Programmatic page for the Home Page
+//  Page Objects:
+//      Welcome text label
+//      How To Get Started Button
+//      My Coach Button
+//      Lessons Button
+//      My Profile Button
+//      * One on One Button
+//      * Blog Button
+//      ? Navigation controller (root page) **NOT IMPLEMENTED**
+//  Page Methods:
+//      ViewDidLoad
+//      ViewWillAppear
+//      ? creators for each object **Not functional due to static elements on storyboard** transitions to the corresponding page
+//      ? Pressed methods for each button **NOT IMPLEMENTED**
+//
 //  Created by Tyler Stone on 5/25/16.
 //  Copyright © 2016 Honda+OSU. All rights reserved.
 //
@@ -28,7 +44,7 @@ class HomeController: UIViewController{
         createMyProfileButton()
         createOneOnOneButton()
         createBlogButton()
-//        let nav:UINavigationController = UINavigationController.init(rootViewController: <#T##UIViewController#>)
+//        let nav:UINavigationController = UINavigationController.init(rootViewController: self)
     }
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -53,24 +69,24 @@ class HomeController: UIViewController{
     }
     
     @IBAction func OneOnOneButtonPressed(sender: AnyObject) {
-//        print("Going to 1-on-1 webpage.")
-//        if let url = NSURL(string: "http://www.google.com") {
-//            UIApplication.sharedApplication().openURL(url)
-//        } else {
-//            print("invalid url")
-//        }
-        let vc = self.storyboard?.instantiateViewControllerWithIdentifier("FeedbackController")
-        self.presentViewController(vc! as UIViewController, animated: true, completion: nil)
+        print("Going to 1-on-1 webpage.")
+        if let url = NSURL(string: "http://www.google.com") {
+            UIApplication.sharedApplication().openURL(url)
+        } else {
+            print("invalid url")
+        }
+//        let vc = self.storyboard?.instantiateViewControllerWithIdentifier("FeedbackController")
+//        self.presentViewController(vc! as UIViewController, animated: true, completion: nil)
 //        Video.downloadVideo("someFolder/TestVideo1.mp4")
     }
 
     @IBAction func BlogButtonPressed(sender: AnyObject) {
-//        print("Going to blog.")
-//        if let url = NSURL(string: "http://u.osu.edu/intermediate/") {
-//            UIApplication.sharedApplication().openURL(url)
-//        } else {
-//            print("invalid url")
-//        }
+        print("Going to blog.")
+        if let url = NSURL(string: "http://u.osu.edu/intermediate/") {
+            UIApplication.sharedApplication().openURL(url)
+        } else {
+            print("invalid url")
+        }
         //TESTING VIDEO
 //        let videoURL = NSBundle.mainBundle().pathForResource("TestVideo1", ofType: "mp4")!
 //        print("LINE 1 with \(videoURL)")
@@ -175,12 +191,12 @@ class HomeController: UIViewController{
         button.setTitleColor(.redColor(), forState: .Highlighted)
         button.backgroundColor = .blackColor()
         //create gradient
-        let btnGradient:CAGradientLayer = CAGradientLayer()
-        btnGradient.frame = button.bounds;
-        let colorTop = UIColor(red: 192.0/255.0, green: 38.0/255.0, blue: 42.0/255.0, alpha: 1.0).CGColor
-        let colorBottom = UIColor(red: 35.0/255.0, green: 2.0/255.0, blue: 2.0/255.0, alpha: 1.0).CGColor
-        btnGradient.colors = [colorTop, colorBottom]
-        button.layer.insertSublayer(btnGradient, atIndex: 0)
+//        let btnGradient:CAGradientLayer = CAGradientLayer()
+//        btnGradient.frame = button.bounds;
+//        let colorTop = UIColor(red: 192.0/255.0, green: 38.0/255.0, blue: 42.0/255.0, alpha: 1.0).CGColor
+//        let colorBottom = UIColor(red: 35.0/255.0, green: 2.0/255.0, blue: 2.0/255.0, alpha: 1.0).CGColor
+//        btnGradient.colors = [colorTop, colorBottom]
+//        button.layer.insertSublayer(btnGradient, atIndex: 0)
         //round corners
         button.layer.cornerRadius = 5.0
     }

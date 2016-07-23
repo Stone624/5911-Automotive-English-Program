@@ -135,7 +135,7 @@ class LoginController: UIViewController,UITextFieldDelegate{
         print("Username entered: \(username)")
         print("Password entered: \(password)")
         
-        if username == "Name.1" && password == "abc"{
+        if username == "Suzuki.72" && password == "abc"{
             print("Access granted")
             globalUtility.setUsername(username!)
             let vc = self.storyboard?.instantiateViewControllerWithIdentifier("HomePageNavigationController")

@@ -223,7 +223,7 @@
         <!--How to get started-->
         <scene sceneID="vxF-1t-YVi">
             <objects>
-                <viewController id="8Lv-IP-hw7" customClass="AboutController" sceneMemberID="viewController">
+                <viewController id="8Lv-IP-hw7" customClass="AboutController" customModule="Automotive_English_Program" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="nCz-2D-F82"/>
                         <viewControllerLayoutGuide type="bottom" id="ZS9-wH-L8c"/>
@@ -259,6 +259,9 @@
                         <barButtonItem key="backBarButtonItem" title="Back" id="VRf-nY-bCO"/>
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="DescriptionTextField" destination="y6G-Ux-xLT" id="xaL-vH-h24"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B8r-M6-NZJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -560,7 +563,7 @@
             </objects>
             <point key="canvasLocation" x="4015.5" y="343"/>
         </scene>
-        <!--Lesson 1-->
+        <!--Lessons-->
         <scene sceneID="XZg-rH-U5g">
             <objects>
                 <tableViewController id="Cm2-Tx-rdz" customClass="Lesson" customModule="Automotive_English_Program" sceneMemberID="viewController">
@@ -599,7 +602,7 @@
                             <outlet property="delegate" destination="Cm2-Tx-rdz" id="piv-Bs-g6G"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Lesson 1" id="XJc-jB-V4j"/>
+                    <navigationItem key="navigationItem" title="Lessons" id="XJc-jB-V4j"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="M3c-ab-LWv" userLabel="First Responder" sceneMemberID="firstResponder"/>

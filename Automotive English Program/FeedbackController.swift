@@ -14,7 +14,7 @@ import AVFoundation
 class FeedbackController: UIViewController{
     
     var videoPlaybackAsset:AVPlayerLayer?
-    let movieURL = Video.downloadVideo("someFolder/TestVideo1.mp4")
+    let movieURL = Video.downloadVideo("\(globalUtility.username)/\(globalUtility.username)L1U1Feedback.mp4")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,7 +41,11 @@ class FeedbackController: UIViewController{
         asset3.seekToTime(kCMTimeZero)
         asset3.actionAtItemEnd = AVPlayerActionAtItemEnd.Pause
         videoPlaybackAsset = AVPlayerLayer(player: asset3)
-        videoPlaybackAsset!.frame = CGRectMake(20, 130, 260, 250)
+        let x = self.view.layer.frame.width * 0.0
+        let y = self.view.layer.frame.height * 0.0
+        let width = self.view.layer.frame.width
+        let height = self.view.layer.frame.height
+        videoPlaybackAsset!.frame = CGRectMake(x, y, width, height)
         videoPlaybackAsset!.backgroundColor = UIColor.orangeColor().CGColor
         videoPlaybackAsset?.videoGravity = AVLayerVideoGravityResizeAspect
         self.view.layer.addSublayer(videoPlaybackAsset!)

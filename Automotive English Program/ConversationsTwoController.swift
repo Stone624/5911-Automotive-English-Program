@@ -10,13 +10,16 @@
 //THING TO NOTE: Make sure your're connected to the internet (wifi or ceullular),
 //make sure capturesession is stopped (not just output session)
 
-//things tried to fix audio issue:
-////        asset3.cancelPendingPrerolls()//will this do anything?
-//            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ConversationsTwoController.itemDidFinishPlaying), name: AVPlayerItemDidPlayToEndTimeNotification, object: asset3)//added end notif
-//  programatically skipping
-
-// FIXED(sort of): AVAudioSession use.
-// FIXED: Minimise global reference for proper deallocation.
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 import UIKit
 import AVKit
@@ -137,34 +140,44 @@ class ConversationsTwoController: UIViewController, AVCaptureFileOutputRecording
             print("creating preview layer and adding it to the page.")
             previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
             self.view.layer.addSublayer(previewLayer!)
-            previewLayer?.frame = CGRectMake(20, 130, 260, 250)//self.view.layer.frame
+            
+            
+            var x = self.view.layer.frame.width * 0.0
+            var y = self.view.layer.frame.height * 0.20
+            var width = self.view.layer.frame.width * 1.0
+            let height = self.view.layer.frame.height * 0.65
+            previewLayer?.frame = CGRectMake(x, y, width, height)//CGRectMake(20, 130, 260, 250)
             
             //Add UI buttons
             print("Creating and adding Buttons to the page. ")
-            buttonStart = UIButton(frame: CGRect(x: 120, y: 400, width: 100, height: 50))
+            x = self.view.layer.frame.width
+            y = self.view.layer.frame.height * 0.90
+            width = self.view.layer.frame.width * 0.3
+            
+            buttonStart = UIButton(frame: CGRect(x: x*0.35, y: y, width: width, height: 50))
             buttonStart.backgroundColor = .greenColor()
             buttonStart.setTitle("Start", forState: .Normal)
             buttonStart.addTarget(self, action: #selector(ConversationsTwoController.StartButtonPressed), forControlEvents: UIControlEvents.TouchUpInside)
             self.view.addSubview(buttonStart)
-            buttonPlayback = UIButton(frame: CGRect(x: 20, y: 400, width: 100, height: 50))
+            buttonPlayback = UIButton(frame: CGRect(x: x*0.025, y: y, width: width, height: 50))
             buttonPlayback.backgroundColor = .greenColor()
             buttonPlayback.setTitle("Playback", forState: .Normal)
             buttonPlayback.addTarget(self, action: #selector(ConversationsTwoController.PlaybackButtonPressed), forControlEvents: UIControlEvents.TouchUpInside)
             buttonPlayback.hidden = true
             self.view.addSubview(buttonPlayback)
-            buttonSubmit = UIButton(frame: CGRect(x: 220, y: 400, width: 100, height: 50))
+            buttonSubmit = UIButton(frame: CGRect(x: x*0.675, y: y, width: width, height: 50))
             buttonSubmit.backgroundColor = .greenColor()
             buttonSubmit.setTitle("Submit", forState: .Normal)
             buttonSubmit.addTarget(self, action: #selector(ConversationsTwoController.SubmitButtonPressed), forControlEvents: UIControlEvents.TouchUpInside)
             buttonSubmit.hidden = true
             self.view.addSubview(buttonSubmit)
-            buttonStop = UIButton(frame: CGRect(x: 120, y: 400, width: 100, height: 50))
+            buttonStop = UIButton(frame: CGRect(x: x*0.35, y: y, width: width, height: 50))
             buttonStop.backgroundColor = .redColor()
             buttonStop.setTitle("Stop", forState: .Normal)
             buttonStop.addTarget(self, action: #selector(ConversationsTwoController.StopButtonPressed), forControlEvents: UIControlEvents.TouchUpInside)
             buttonStop.hidden = true
             self.view.addSubview(buttonStop)
-            buttonRerecord = UIButton(frame: CGRect(x: 120, y: 400, width: 100, height: 50))
+            buttonRerecord = UIButton(frame: CGRect(x: x*0.35, y: y, width: width, height: 50))
             buttonRerecord.backgroundColor = .greenColor()
             buttonRerecord.setTitle("Redo", forState: .Normal)
             buttonRerecord.addTarget(self, action: #selector(ConversationsTwoController.RerecordButtonPressed), forControlEvents: UIControlEvents.TouchUpInside)
@@ -206,7 +219,12 @@ class ConversationsTwoController: UIViewController, AVCaptureFileOutputRecording
                                                          name: AVPlayerItemDidPlayToEndTimeNotification, object: asset3.currentItem)
         asset3.actionAtItemEnd = AVPlayerActionAtItemEnd.Pause
         videoPlaybackAsset = AVPlayerLayer(player: asset3)
-        videoPlaybackAsset!.frame = CGRectMake(20, 130, 260, 250)
+        
+        let x = Int(self.view.layer.frame.width * 0.0)
+        let y = Int(self.view.layer.frame.height * 0.20)
+        let width = Int(self.view.layer.frame.width * 1.0)
+        let height = Int(self.view.layer.frame.height * 0.65)
+        videoPlaybackAsset!.frame = CGRectMake(CGFloat(x), CGFloat(y), CGFloat(width), CGFloat(height))//CGRectMake(20, 130, 260, 250)
         videoPlaybackAsset!.backgroundColor = UIColor.orangeColor().CGColor
         videoPlaybackAsset?.videoGravity = AVLayerVideoGravityResizeAspect
         self.view.layer.addSublayer(videoPlaybackAsset!)

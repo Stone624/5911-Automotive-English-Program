@@ -64,7 +64,11 @@ class ConversationsOneController: UIViewController{
         asset3.seekToTime(kCMTimeZero)
         asset3.actionAtItemEnd = AVPlayerActionAtItemEnd.Pause
         videoPlaybackAsset = AVPlayerLayer(player: asset3)
-        videoPlaybackAsset!.frame = CGRectMake(20, 130, 260, 250)
+        let x = Int(self.view.layer.frame.width * 0.0)
+        let y = Int(self.view.layer.frame.height * 0.20)
+        let width = Int(self.view.layer.frame.width * 1.0)
+        let height = Int(self.view.layer.frame.height * 0.65)
+        videoPlaybackAsset!.frame = CGRectMake(CGFloat(x), CGFloat(y), CGFloat(width), CGFloat(height))
         videoPlaybackAsset!.backgroundColor = UIColor.orangeColor().CGColor
         videoPlaybackAsset?.videoGravity = AVLayerVideoGravityResizeAspect
         self.view.layer.addSublayer(videoPlaybackAsset!)
