@@ -2,6 +2,14 @@
 //  ConversationsStartController.swift
 //  Automotive English Program
 //
+//
+//  Conversation Start Page (1/3). This page is the first page for the Conversation Section. It is essentially an overview of the entire conversation about to be practiced.
+//  Page Objects:
+//      Image - shows conversation texts.
+//      Button Practice - Continues to Conversation Page 2
+//      Button PlayAudio - Plays full conversation Audio
+//      Button PlayVideo - Plays full conversation Video
+//
 //  Created by Tyler Stone on 6/8/16.
 //  Copyright © 2016 Honda+OSU. All rights reserved.
 //

@@ -143,7 +143,9 @@ class GlobalUtility {
         let completeMovie = mergeVideos()
         print("Finished merged movie at: \(completeMovie)")
         print("Uploading Video...")
-        let testVideo:Video = Video(videoURL: completeMovie,s3destination: "\(username)/\(Int(NSDate().timeIntervalSince1970)).mov")
+        let testVideo:Video = Video(videoURL: completeMovie,s3destination:
+            "\(username)/\(username)L1U1C\(Int(NSDate().timeIntervalSince1970)).mov")
+            //"\(username)/\(Int(NSDate().timeIntervalSince1970)).mov")
         testVideo.uploadVideo()
     }
     

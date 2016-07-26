@@ -2,6 +2,14 @@
 //  MyCoachController.swift
 //  Automotive English Program
 //
+//  Programmatic view for MyCoach page. A table view with teacher names, and description for their lessons.
+//
+//  page objects:
+//      Cells = [TEACHER  LESSONS]
+//
+//  Methods:
+//      Table view delegate methods - creates table for English/Japanese setting.
+//
 //  Created by Tyler Stone on 7/18/16.
 //  Copyright © 2016 Honda+OSU. All rights reserved.
 //

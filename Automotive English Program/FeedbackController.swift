@@ -2,6 +2,11 @@
 //  FeedbackController.swift
 //  Automotive English Program
 //
+//  Programmatic view for Feedback page. This page downloads a Feedback video for a given student Lesson/Unit, and displays it.
+//      Currently this page has a reload button to be pressed after the resource is fully downloaded. See Jackie/the Future Developer document section 'Things to Note' 3.5 for more information. 
+//  page objects:
+//      VideoPlayerLayer - Displasy feedback video.
+//
 //  Created by Tyler Stone on 7/18/16.
 //  Copyright © 2016 Honda+OSU. All rights reserved.
 //

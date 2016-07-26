@@ -1,7 +1,13 @@
 //
-//  Lesson1.swift
+//  Lessons.swift
 //  Automotive English Program
 //
+//  Programmatic view for Lessons page. Table view for displaying all lessons and units.
+//  page objects:
+//      section of Cells = Lessons 1 through 5
+//      Cell = [Unit description  ]
+//  Methods:
+//      Table view delegate methods - sets up a 5 section, 6 cells in section 1 and 18 cells in sections 2 through 5. The L-U combination fill out globalUtility details to be used in the Unit page.
 //  Created by Tyler Stone on 6/17/16.
 //  Copyright © 2016 Honda+OSU. All rights reserved.
 //
@@ -42,8 +48,8 @@ class Lesson: UITableViewController{
                 globalUtility.setUnitNumber(1)
                 globalUtility.setUnitImageLink(NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("5911HomePageMan", ofType: "png")!))
                 globalUtility.setConversationImageLink(NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("5911Conversations1", ofType: "png")!))
-//                globalUtility.setConversationVideoLink(Video.downloadVideo("someFolder/TestVideo1.mp4"))//"staticContent/L1U1FullConversation.mp4"))
-                globalUtility.setConversationVideoLink(NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("TestVideo1", ofType: "mp4")!))
+                globalUtility.setConversationVideoLink(Video.downloadVideo("staticContent/L1U1FullConversation.mp4"))
+//                globalUtility.setConversationVideoLink(NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("TestVideo1", ofType: "mp4")!))
                 globalUtility.addConversationSentences(["Hi, I'm Mia Clarkson",
                 "Hi, My name is [your full name]",
                 "Could you spell that for me?",

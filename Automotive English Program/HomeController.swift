@@ -13,8 +13,8 @@
 //      * Blog Button
 //      ? Navigation controller (root page) **NOT IMPLEMENTED**
 //  Page Methods:
-//      ViewDidLoad
-//      ViewWillAppear
+//      ViewDidLoad - creates UI objects
+//      ViewWillAppear - Sets language settings
 //      ? creators for each object **Not functional due to static elements on storyboard** transitions to the corresponding page
 //      ? Pressed methods for each button **NOT IMPLEMENTED**
 //

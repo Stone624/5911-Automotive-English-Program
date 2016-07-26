@@ -2,6 +2,10 @@
 //  ConversationsOneController.swift
 //  Automotive English Program
 //
+//  Conversation Other Page (2/3). This page is the Second page for the Conversation Section. This page (along with 3) can either be a continuing page if there is still content left to do, or a finishing page if there is no content left to do. If it is a continuing page, it will play the other person's video clip of their section of the conversation. At the end of the clip, it goes to page 3. If it is a finishing page, it runs the "mergeAndSend" method.
+//  Page Objects:
+//      Video - Plays the conversation video
+//
 //  Created by Tyler Stone on 6/8/16.
 //  Copyright © 2016 Honda+OSU. All rights reserved.
 //
@@ -69,7 +73,7 @@ class ConversationsOneController: UIViewController{
         let width = Int(self.view.layer.frame.width * 1.0)
         let height = Int(self.view.layer.frame.height * 0.65)
         videoPlaybackAsset!.frame = CGRectMake(CGFloat(x), CGFloat(y), CGFloat(width), CGFloat(height))
-        videoPlaybackAsset!.backgroundColor = UIColor.orangeColor().CGColor
+//        videoPlaybackAsset!.backgroundColor = UIColor.orangeColor().CGColor
         videoPlaybackAsset?.videoGravity = AVLayerVideoGravityResizeAspect
         self.view.layer.addSublayer(videoPlaybackAsset!)
     }

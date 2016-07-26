@@ -2,6 +2,11 @@
 //  ViewController.swift
 //  Automotive English Program
 //
+//  Conversation Student Page (3/3). This page is the Third page for the Conversation Section. This page (along with 2) can either be a continuing page if there is still content left to do, or a finishing page if there is no content left to do. If it is a continuing page, it will display a video capture preview with a start button. Once pressed, this will capture your recording for a max of 20 seconds, and the button will turn to a stop button to be pressed when complete. Once the capture is complete, the video recording preview will hide, and the video playback of the newly recorded clip will appear with 3 options: Playback, Redo, and Submit. Playback plays the clip back, Redo disregards that clip and takes you back to the initial recording preview with the start button, and submit continues on to Conversation Page 2 with the next part of the conversation.. If it is a finishing page, it runs the "mergeAndSend" method.
+//  Page Objects:
+//      Video - Plays the conversation video
+//
+//
 //  Created by Tyler Stone on 5/18/16.
 //  Copyright © 2016 Honda+OSU. All rights reserved.
 //
@@ -225,7 +230,7 @@ class ConversationsTwoController: UIViewController, AVCaptureFileOutputRecording
         let width = Int(self.view.layer.frame.width * 1.0)
         let height = Int(self.view.layer.frame.height * 0.65)
         videoPlaybackAsset!.frame = CGRectMake(CGFloat(x), CGFloat(y), CGFloat(width), CGFloat(height))//CGRectMake(20, 130, 260, 250)
-        videoPlaybackAsset!.backgroundColor = UIColor.orangeColor().CGColor
+//        videoPlaybackAsset!.backgroundColor = UIColor.orangeColor().CGColor
         videoPlaybackAsset?.videoGravity = AVLayerVideoGravityResizeAspect
         self.view.layer.addSublayer(videoPlaybackAsset!)
     }

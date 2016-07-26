@@ -2,6 +2,8 @@
 //  Lesson1Unit1Table.swift
 //  Automotive English Program
 //
+//  Programmatic view for UnitTable page. This page is what is displayed in the Embedded table view in the Unit page. It currently lists Pronunciations, Conversations, Speaking Assessment, and Feedback
+//
 //  Created by Tyler Stone on 6/15/16.
 //  Copyright © 2016 Honda+OSU. All rights reserved.
 //

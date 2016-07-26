@@ -2,6 +2,14 @@
 //  ProfileController.swift
 //  Automotive English Program
 //
+//  Programmatic view for MyProfile page. A page for user settings and personal statistics.
+//      Currently this page only has a button for switching the language setting
+//  Page Objects:
+//      Button - switches language setting
+//      Label - Displays current language setting
+//  Methods:
+//      updatePage - Updates the label with the current language setting.
+//
 //  Created by Tyler Stone on 6/6/16.
 //  Copyright © 2016 Honda+OSU. All rights reserved.
 //

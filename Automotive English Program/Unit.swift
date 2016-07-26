@@ -2,6 +2,13 @@
 //  Lesson1.swift
 //  Automotive English Program
 //
+//  Programmatic view for A Unit page. Content dynamically filled out from GlobalUtility (set in lessons)
+//  page objects:
+//      Label - Displays current unit
+//      Image - Displays unit image
+//      Embedded Table view - gives options for progression.
+//
+
 //  Created by Tyler Stone on 6/8/16.
 //  Copyright © 2016 Honda+OSU. All rights reserved.
 //
